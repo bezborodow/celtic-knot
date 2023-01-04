@@ -9,6 +9,18 @@ CY = H / 2
 BG = '#012169'
 LINE = '#C8102E'
 STROKE = 'white'
+HORIZ = 4
+VERT = 3
+ROWS = VERT * 2 - 1
+COLS = HORIZ * 2 - 1
+
+grid = Array.new(ROWS)
+(0..ROWS).each() do |i|
+  grid[i] = Array.new(COLS)
+  (0..COLS).each() do |j|
+    grid[i][j] = nil
+  end
+end
 
 doc = Nokogiri::XML::Document.new
 
