@@ -1,0 +1,30 @@
+#!/usr/bin/env ruby
+require 'nokogiri'
+require 'open-uri'
+
+W = 800
+H = 400
+CX = W / 2
+CY = H / 2
+BG = '#012169'
+LINE = '#C8102E'
+STROKE = 'white'
+
+doc = Nokogiri::XML::Document.new
+
+Nokogiri::XML::Node.new 'svg', doc do |svg|
+  doc.add_child svg
+  svg[:xmlns] = 'http://www.w3.org/2000/svg'
+  svg[:viewBox] = "0 0 #{W} #{H}"
+  svg[:width] = 1200
+  svg[:height] = 600
+
+  # Background.
+  Nokogiri::XML::Node.new 'path', doc do |path|
+    svg.add_child path
+    path[:d] = "M0,0 v#{H} h#{W} v-#{H} z"
+    path[:fill] = BG
+  end
+end
+
+puts doc.to_xml indent:2
