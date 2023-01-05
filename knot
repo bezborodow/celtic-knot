@@ -24,16 +24,17 @@ class KnotCell
 end
 
 def create_grid
-  grid = Matrix.build(ROWS, COLS) {|i, j| KnotCell.new}
-  grid.each_with_index do |e, i, j|
+  Matrix.build(ROWS, COLS) do |i, j|
     inner = 20
     outer = 25
+
+    e = KnotCell.new
     e.cx = j * GRIDSIZE + GRIDSIZE / 2
     e.cy = i * GRIDSIZE + GRIDSIZE / 2
       #i: {ny: cy - inner, nx: cx},
-  end
 
-  return grid
+    e
+  end
 end
 
 def draw_grid(doc, svg, grid)
