@@ -14,14 +14,46 @@ VERT = 3
 ROWS = VERT * 2 - 1
 COLS = HORIZ * 2 - 1
 
-grid = Array.new(ROWS)
-(0..ROWS).each() do |i|
-  grid[i] = Array.new(COLS)
-  (0..COLS).each() do |j|
-    grid[i][j] = nil
+def create_grid
+  grid = []
+  (0..ROWS).each() do |i|
+    grid[i] = []
+    (0..COLS).each() do |j|
+      inner = 20
+      outer = 25
+      cx = j * 50 + 50 / 2
+      cy = i * 50 + 50 / 2
+      grid[i][j] = {
+        cx: cx,
+        cy: cy,
+        i: {ny: cy - inner, nx: cx},
+        o: nil,
+      }
+    end
+  end
+
+  return grid
+end
+
+def draw_grid(doc, svg, grid)
+  Nokogiri::XML::Node.new 'g', doc do |g|
+    svg.add_child g
+    g[:fill] = 'white'
+
+    grid.each_with_index do |row, i|
+      row.each_with_index do |col, j|
+        Nokogiri::XML::Node.new 'circle', doc do |circle|
+          g.add_child circle
+          circle[:cx] = col[:cx]
+          circle[:cy] = col[:cy]
+          circle[:r] = 3
+        end
+      end
+    end
   end
 end
 
+grid = create_grid
 doc = Nokogiri::XML::Document.new
 
 Nokogiri::XML::Node.new 'svg', doc do |svg|
@@ -37,6 +69,8 @@ Nokogiri::XML::Node.new 'svg', doc do |svg|
     path[:d] = "M0,0 v#{H} h#{W} v-#{H} z"
     path[:fill] = BG
   end
+
+  draw_grid doc, svg, grid
 end
 
 puts doc.to_xml indent:2
