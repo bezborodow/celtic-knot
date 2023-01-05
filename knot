@@ -17,7 +17,9 @@ COLS = HORIZ * 2 - 1
 GRIDSIZE = 100
 
 class KnotCell
-  attr_accessor :cx, :cy
+  attr_accessor :cx, :cy,
+    :iny, :inx, :iex, :iey, :isx, :isy, :iwx, :iwy,
+    :ony, :onx, :oex, :oey, :osx, :osy, :owx, :owy
 end
 
 def create_grid
@@ -28,7 +30,8 @@ def create_grid
     e = KnotCell.new
     e.cx = j * GRIDSIZE + GRIDSIZE / 2
     e.cy = i * GRIDSIZE + GRIDSIZE / 2
-      #i: {ny: cy - inner, nx: cx},
+    e.iny = e.cy - inner
+    e.inx = e.cx
 
     e
   end
