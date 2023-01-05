@@ -15,6 +15,13 @@ ROWS = VERT * 2 - 1
 COLS = HORIZ * 2 - 1
 GRIDSIZE = 100
 
+class KnotCell
+  attr_accessor :cx, :cy
+
+  def new
+  end
+end
+
 def create_grid
   grid = []
   (0..ROWS-1).each() do |i|
@@ -22,14 +29,11 @@ def create_grid
     (0..COLS-1).each() do |j|
       inner = 20
       outer = 25
-      cx = j * GRIDSIZE + GRIDSIZE / 2
-      cy = i * GRIDSIZE + GRIDSIZE / 2
-      grid[i][j] = {
-        cx: cx,
-        cy: cy,
-        i: {ny: cy - inner, nx: cx},
-        o: nil,
-      }
+      cell = KnotCell.new
+      cell.cx = j * GRIDSIZE + GRIDSIZE / 2
+      cell.cy = i * GRIDSIZE + GRIDSIZE / 2
+      grid[i][j] = cell
+        #i: {ny: cy - inner, nx: cx},
     end
   end
 
@@ -45,8 +49,8 @@ def draw_grid(doc, svg, grid)
       row.each_with_index do |col, j|
         Nokogiri::XML::Node.new 'circle', doc do |circle|
           g.add_child circle
-          circle[:cx] = col[:cx]
-          circle[:cy] = col[:cy]
+          circle[:cx] = col.cx
+          circle[:cy] = col.cy
           circle[:r] = 1
         end
       end
