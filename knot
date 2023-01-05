@@ -16,9 +16,9 @@ COLS = HORIZ * 2 - 1
 
 def create_grid
   grid = []
-  (0..ROWS).each() do |i|
+  (0..ROWS-1).each() do |i|
     grid[i] = []
-    (0..COLS).each() do |j|
+    (0..COLS-1).each() do |j|
       inner = 20
       outer = 25
       cx = j * 50 + 50 / 2
