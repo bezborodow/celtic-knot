@@ -19,7 +19,9 @@ GRIDSIZE = 100
 class KnotCell
   attr_accessor :cx, :cy,
     :iny, :inx, :iex, :iey, :isx, :isy, :iwx, :iwy,
-    :ony, :onx, :oex, :oey, :osx, :osy, :owx, :owy
+    :ony, :onx, :oex, :oey, :osx, :osy, :owx, :owy,
+    :iney, :inex, :isex, :isey, :iswx, :iswy, :inwx, :inwy,
+    :oney, :onex, :osex, :osey, :oswx, :oswy, :onwx, :onwy
 end
 
 def create_grid
