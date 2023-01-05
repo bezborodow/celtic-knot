@@ -51,6 +51,20 @@ def draw_grid(doc, svg, grid)
       end
     end
   end
+
+  Nokogiri::XML::Node.new 'g', doc do |g|
+    svg.add_child g
+    g[:fill] = 'cyan'
+
+    grid.each do |e|
+      Nokogiri::XML::Node.new 'circle', doc do |circle|
+        g.add_child circle
+        circle[:cx] = e.inx
+        circle[:cy] = e.iny
+        circle[:r] = 1
+      end
+    end
+  end
 end
 
 grid = create_grid
