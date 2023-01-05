@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 require 'nokogiri'
 require 'open-uri'
+require 'matrix'
 
 W = 800
 H = 600
@@ -23,18 +24,13 @@ class KnotCell
 end
 
 def create_grid
-  grid = []
-  (0..ROWS-1).each() do |i|
-    grid[i] = []
-    (0..COLS-1).each() do |j|
-      inner = 20
-      outer = 25
-      cell = KnotCell.new
-      cell.cx = j * GRIDSIZE + GRIDSIZE / 2
-      cell.cy = i * GRIDSIZE + GRIDSIZE / 2
-      grid[i][j] = cell
-        #i: {ny: cy - inner, nx: cx},
-    end
+  grid = Matrix.build(ROWS, COLS) {|i, j| KnotCell.new}
+  grid.each_with_index do |e, i, j|
+    inner = 20
+    outer = 25
+    e.cx = j * GRIDSIZE + GRIDSIZE / 2
+    e.cy = i * GRIDSIZE + GRIDSIZE / 2
+      #i: {ny: cy - inner, nx: cx},
   end
 
   return grid
@@ -45,14 +41,13 @@ def draw_grid(doc, svg, grid)
     svg.add_child g
     g[:fill] = 'white'
 
-    grid.each_with_index do |row, i|
-      row.each_with_index do |col, j|
-        Nokogiri::XML::Node.new 'circle', doc do |circle|
-          g.add_child circle
-          circle[:cx] = col.cx
-          circle[:cy] = col.cy
-          circle[:r] = 1
-        end
+    grid.each do |e|
+      #draw_grid_point doc, g, col.cx, col.cy
+      Nokogiri::XML::Node.new 'circle', doc do |circle|
+        g.add_child circle
+        circle[:cx] = e.cx
+        circle[:cy] = e.cy
+        circle[:r] = 1
       end
     end
   end
