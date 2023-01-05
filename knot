@@ -3,7 +3,7 @@ require 'nokogiri'
 require 'open-uri'
 
 W = 800
-H = 400
+H = 600
 CX = W / 2
 CY = H / 2
 BG = '#012169'
@@ -13,6 +13,7 @@ HORIZ = 4
 VERT = 3
 ROWS = VERT * 2 - 1
 COLS = HORIZ * 2 - 1
+GRIDSIZE = 100
 
 def create_grid
   grid = []
@@ -21,8 +22,8 @@ def create_grid
     (0..COLS-1).each() do |j|
       inner = 20
       outer = 25
-      cx = j * 50 + 50 / 2
-      cy = i * 50 + 50 / 2
+      cx = j * GRIDSIZE + GRIDSIZE / 2
+      cy = i * GRIDSIZE + GRIDSIZE / 2
       grid[i][j] = {
         cx: cx,
         cy: cy,
@@ -46,7 +47,7 @@ def draw_grid(doc, svg, grid)
           g.add_child circle
           circle[:cx] = col[:cx]
           circle[:cy] = col[:cy]
-          circle[:r] = 3
+          circle[:r] = 1
         end
       end
     end
@@ -61,7 +62,7 @@ Nokogiri::XML::Node.new 'svg', doc do |svg|
   svg[:xmlns] = 'http://www.w3.org/2000/svg'
   svg[:viewBox] = "0 0 #{W} #{H}"
   svg[:width] = 1200
-  svg[:height] = 600
+  svg[:height] = 900
 
   # Background.
   Nokogiri::XML::Node.new 'path', doc do |path|
