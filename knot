@@ -70,14 +70,10 @@ class KnotCell
                        c.y + v[1] * inner)
     end
 
-    #@o = pos.map do |ordinal, xy|
-    #  Point.new(c.x + xy[0] * outer, c.y + xy[1] * outer)
-    #end
     @o = pos.each_with_object({}) do |(k, v), a|
       a[k] = Point.new(c.x + v[0] * outer,
                        c.y + v[1] * outer)
     end
-
   end
 end
 
@@ -136,20 +132,27 @@ def draw_knot(doc, svg, grid)
     svg.add_child g
     g[:fill] = LINE
 
-    follow = [0, 1]
-    dir = :se
-    while (follow)
-      e = grid[*follow]
+    direction = Vector[2, 2]
+    position = Vector[0, 1]
+
+    i = 0
+    while (direction)
+      e = grid[*position]
+
       Nokogiri::XML::Node.new 'path', doc do |path|
         g.add_child path
         d = Path.new
-        d.M e.i[:e]
+        d.M e.i[:n]
+        d.L e.i[:e]
         d.L e.i[:s]
         d.L e.i[:w]
         path[:d] = d.z
       end
 
-      follow = nil
+      position += direction
+
+      i += 1
+      direction = false if i > 1
     end
   end
 end
