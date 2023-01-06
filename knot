@@ -139,14 +139,13 @@ def draw_knot(doc, svg, grid)
     follow = [0, 1]
     dir = :se
     while (follow)
-      #e = grid[*follow]
-      e = grid[0, 1]
+      e = grid[*follow]
       Nokogiri::XML::Node.new 'path', doc do |path|
         g.add_child path
         d = Path.new
-        d.M(e.i[:e])
-        d.L(e.i[:s])
-        d.L(e.i[:w])
+        d.M e.i[:e]
+        d.L e.i[:s]
+        d.L e.i[:w]
         path[:d] = d.z
       end
 
