@@ -3,15 +3,6 @@ require 'nokogiri'
 require 'open-uri'
 require 'matrix'
 
-class Point
-  attr_accessor :x, :y
-
-  def initialize x, y
-    @x = x
-    @y = y
-  end
-end
-
 W = 800
 H = 600
 CX = W / 2
@@ -27,9 +18,17 @@ GRIDSIZE = 100
 INNER = 20
 OUTER = 25
 
+class Point
+  attr_accessor :x, :y
+
+  def initialize x, y
+    @x = x
+    @y = y
+  end
+end
 
 class KnotCell
-  attr_reader :c
+  attr_reader :c, :i, :o
 
   def initialize(c, inner, outer)
     @c = c
@@ -38,6 +37,10 @@ class KnotCell
       n: [0, 1], ne: [0.5, 0.5], e: [1, 0], se: [0.5, -0.5],
       s: [0, -1], sw: [-0.5, -0.5], w: [-1, 0], nw: [-0.5, 0.5]
     }
+
+    @i = pos.map do |ordinal, xy|
+      Point.new(c.x + xy[0] * inner, c.y + xy[1] * inner)
+    end
 
   end
 end
@@ -69,11 +72,13 @@ def draw_grid(doc, svg, grid)
     g[:fill] = 'cyan'
 
     grid.each do |e|
-      Nokogiri::XML::Node.new 'circle', doc do |circle|
-        g.add_child circle
-        circle[:cx] = e.c.x
-        circle[:cy] = e.c.y
-        circle[:r] = 1
+      e.i.each do |k, v|
+        Nokogiri::XML::Node.new 'circle', doc do |circle|
+          g.add_child circle
+          circle[:cx] = k.x
+          circle[:cy] = k.y
+          circle[:r] = 1
+        end
       end
     end
   end
