@@ -27,6 +27,33 @@ class Point
   end
 end
 
+class Path
+  def initialize
+    @path = []
+  end
+
+  def M(m)
+    @path.push __method__, m.x, m.y
+  end
+
+  def m(m)
+    @path.push __method__, m.x, m.y
+  end
+
+  def L(m)
+    @path.push __method__, m.x, m.y
+  end
+
+  def l(m)
+    @path.push __method__, m.x, m.y
+  end
+
+  def z
+    @path.push 'z'
+    @path.join(' ')
+  end
+end
+
 class KnotCell
   attr_reader :c, :i, :o
 
@@ -38,12 +65,17 @@ class KnotCell
       s: [0, -1], sw: [-0.5, -0.5], w: [-1, 0], nw: [-0.5, 0.5]
     }
 
-    @i = pos.map do |ordinal, xy|
-      Point.new(c.x + xy[0] * inner, c.y + xy[1] * inner)
+    @i = pos.each_with_object({}) do |(k, v), a|
+      a[k] = Point.new(c.x + v[0] * inner,
+                       c.y + v[1] * inner)
     end
 
-    @o = pos.map do |ordinal, xy|
-      Point.new(c.x + xy[0] * outer, c.y + xy[1] * outer)
+    #@o = pos.map do |ordinal, xy|
+    #  Point.new(c.x + xy[0] * outer, c.y + xy[1] * outer)
+    #end
+    @o = pos.each_with_object({}) do |(k, v), a|
+      a[k] = Point.new(c.x + v[0] * outer,
+                       c.y + v[1] * outer)
     end
 
   end
@@ -79,8 +111,8 @@ def draw_grid(doc, svg, grid)
       e.i.each do |k, v|
         Nokogiri::XML::Node.new 'circle', doc do |circle|
           g.add_child circle
-          circle[:cx] = k.x
-          circle[:cy] = k.y
+          circle[:cx] = v.x
+          circle[:cy] = v.y
           circle[:r] = 1
         end
       end
@@ -90,11 +122,35 @@ def draw_grid(doc, svg, grid)
       e.o.each do |k, v|
         Nokogiri::XML::Node.new 'circle', doc do |circle|
           g.add_child circle
-          circle[:cx] = k.x
-          circle[:cy] = k.y
+          circle[:cx] = v.x
+          circle[:cy] = v.y
           circle[:r] = 1
         end
       end
+    end
+  end
+end
+
+def draw_knot(doc, svg, grid)
+  Nokogiri::XML::Node.new 'g', doc do |g|
+    svg.add_child g
+    g[:fill] = LINE
+
+    follow = [0, 1]
+    dir = :se
+    while (follow)
+      #e = grid[*follow]
+      e = grid[0, 1]
+      Nokogiri::XML::Node.new 'path', doc do |path|
+        g.add_child path
+        d = Path.new
+        d.M(e.i[:e])
+        d.L(e.i[:s])
+        d.L(e.i[:w])
+        path[:d] = d.z
+      end
+
+      follow = nil
     end
   end
 end
@@ -116,6 +172,7 @@ Nokogiri::XML::Node.new 'svg', doc do |svg|
     path[:fill] = BG
   end
 
+  draw_knot doc, svg, grid
   draw_grid doc, svg, grid
 end
 
