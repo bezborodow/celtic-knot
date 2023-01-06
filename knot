@@ -127,34 +127,26 @@ def draw_grid(doc, svg, grid)
   end
 end
 
-def draw_knot(doc, svg, grid)
-  Nokogiri::XML::Node.new 'g', doc do |g|
-    svg.add_child g
-    g[:fill] = LINE
+def draw_knot(grid)
+  direction = Vector[2, 2]
+  position = Vector[0, 1]
 
-    direction = Vector[2, 2]
-    position = Vector[0, 1]
+  d = Path.new
+  i = 0
+  while (direction)
+  e = grid[*position]
+    d.M e.i[:n]
+    d.L e.i[:e]
+    d.L e.i[:s]
+    d.L e.i[:w]
 
-    i = 0
-    while (direction)
-      e = grid[*position]
+    position += direction
 
-      Nokogiri::XML::Node.new 'path', doc do |path|
-        g.add_child path
-        d = Path.new
-        d.M e.i[:n]
-        d.L e.i[:e]
-        d.L e.i[:s]
-        d.L e.i[:w]
-        path[:d] = d.z
-      end
-
-      position += direction
-
-      i += 1
-      direction = false if i > 1
-    end
+    i += 1
+    direction = false if i > 1
   end
+
+  d.z
 end
 
 grid = create_grid
@@ -174,7 +166,15 @@ Nokogiri::XML::Node.new 'svg', doc do |svg|
     path[:fill] = BG
   end
 
-  draw_knot doc, svg, grid
+  Nokogiri::XML::Node.new 'g', doc do |g|
+    svg.add_child g
+    g[:fill] = LINE
+
+    Nokogiri::XML::Node.new 'path', doc do |path|
+      g.add_child path
+      path[:d] = draw_knot grid
+    end
+  end
   draw_grid doc, svg, grid
 end
 
