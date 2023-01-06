@@ -16,7 +16,7 @@ ROWS = VERT * 2 - 1
 COLS = HORIZ * 2 - 1
 GRIDSIZE = 100
 INNER = 20
-OUTER = 25
+OUTER = 30
 
 class Point
   attr_accessor :x, :y
@@ -40,6 +40,10 @@ class KnotCell
 
     @i = pos.map do |ordinal, xy|
       Point.new(c.x + xy[0] * inner, c.y + xy[1] * inner)
+    end
+
+    @o = pos.map do |ordinal, xy|
+      Point.new(c.x + xy[0] * outer, c.y + xy[1] * outer)
     end
 
   end
@@ -73,6 +77,17 @@ def draw_grid(doc, svg, grid)
 
     grid.each do |e|
       e.i.each do |k, v|
+        Nokogiri::XML::Node.new 'circle', doc do |circle|
+          g.add_child circle
+          circle[:cx] = k.x
+          circle[:cy] = k.y
+          circle[:r] = 1
+        end
+      end
+    end
+
+    grid.each do |e|
+      e.o.each do |k, v|
         Nokogiri::XML::Node.new 'circle', doc do |circle|
           g.add_child circle
           circle[:cx] = k.x
