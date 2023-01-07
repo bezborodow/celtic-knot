@@ -356,6 +356,17 @@ def draw_knot(grid)
     d.L a.o[:w_se]
   end
 
+  # Bend NW
+  a = grid.position 1, 2
+  d.M a.o[:w_ne]
+  d.L Point.midpoint(a.i[:w], grid.nw.i[:s])
+  d.A sm_r, sm_r, 0, 0, 0, Point.midpoint(grid.w2.i[:e], grid.sw.i[:n])
+  d.L grid.s2.o[:n_sw]
+  d.L grid.s2.o[:w_ne]
+  d.L Point.midpoint(grid.w2.i[:s], grid.sw.i[:w])
+  d.A b_r, b_r, 0, 0, 1, Point.midpoint(a.i[:n], grid.nw.i[:e])
+  d.L a.o[:n_sw]
+
   d.z
 end
 
