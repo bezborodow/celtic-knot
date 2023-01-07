@@ -153,12 +153,36 @@ def draw_grid(doc, svg, grid)
 end
 
 def draw_knot(grid)
-  direction = Vector[2, 2]
-  position = Vector[1, 2]
-
   d = Path.new
+
+  (1..(ROWS-3)).step(2) do |i|
+    (2..(COLS-5)).step(2) do |j|
+      position = Vector[i, j]
+      a = grid[i, j]
+
+      sw = grid[*position + Vector[2, 2]]
+      d.M a.o[:e_sw]
+      d.L sw.o[:n_sw]
+      d.L sw.o[:w_ne]
+      d.L a.o[:s_ne]
+    end
+  end
+
+  (4..(ROWS-2)).step(2) do |i|
+    (1..(COLS-4)).step(2) do |j|
+      position = Vector[i, j]
+      a = grid[i, j]
+
+      nw = grid[*position + Vector[-2, 2]]
+      d.M a.o[:e_nw]
+      d.L nw.o[:s_nw]
+      d.L nw.o[:w_se]
+      d.L a.o[:n_se]
+    end
+  end
+
   i = 0
-  while direction
+  while false
     e = grid[*position]
 
     if i == 2
