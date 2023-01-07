@@ -15,8 +15,8 @@ VERT = 3
 ROWS = VERT * 2 - 1
 COLS = HORIZ * 2 - 1
 GRIDSIZE = 100
-INNER = 20
-OUTER = 30
+INNER_WIDTH = 20
+STROKE_WIDTH = 10
 
 class Point
   attr_accessor :x, :y
@@ -57,7 +57,9 @@ end
 class KnotCell
   attr_reader :c, :i, :o
 
-  def initialize(c, inner, outer)
+  def initialize(c, inner, stroke)
+    outer = inner + stroke
+
     @c = c
 
     pos = {
@@ -74,13 +76,30 @@ class KnotCell
       a[k] = Point.new(c.x + v[0] * outer,
                        c.y + v[1] * outer)
     end
+
+    subpos = [
+      [:n, :sw],
+      [:n, :se],
+      [:e, :sw],
+      [:e, :nw],
+      [:s, :nw],
+      [:s, :ne],
+      [:w, :ne],
+      [:w, :se],
+    ]
+    subpos.each do |v|
+      sym = (v[0].to_s << '_' << v[1].to_s).to_sym
+      @o[sym] = Point.new(@o[v[0]].x + stroke * pos[v[1]][0],
+                          @o[v[0]].y + stroke * pos[v[1]][1])
+    end
   end
 end
 
 def create_grid
   Matrix.build(ROWS, COLS) do |i, j|
-    c = Point.new(GRIDSIZE * j + GRIDSIZE / 2, GRIDSIZE * i + GRIDSIZE / 2)
-    KnotCell.new(c, INNER, OUTER)
+    c = Point.new(GRIDSIZE * j + GRIDSIZE / 2,
+                  GRIDSIZE * i + GRIDSIZE / 2)
+    KnotCell.new(c, INNER_WIDTH, STROKE_WIDTH)
   end
 end
 
@@ -137,10 +156,10 @@ def draw_knot(grid)
     e = grid[*position]
 
     sw = grid[*position + direction]
-    d.M e.i[:e]
-    d.L sw.i[:n]
-    d.L sw.i[:w]
-    d.L e.i[:s]
+    d.M e.o[:e_sw]
+    d.L sw.o[:n_sw]
+    d.L sw.o[:w_ne]
+    d.L e.o[:s_ne]
 
     position += direction
 
