@@ -159,6 +159,7 @@ def draw_knot(grid)
   sm_r = nil
   b_r = nil
 
+  # Diagonals right.
   (1..(ROWS-3)).step(2) do |i|
     (2..(COLS-5)).step(2) do |j|
       position = Vector[i, j]
@@ -172,6 +173,7 @@ def draw_knot(grid)
     end
   end
 
+  # Diagonals left.
   (4..(ROWS-2)).step(2) do |i|
     (1..(COLS-4)).step(2) do |j|
       position = Vector[i, j]
@@ -185,7 +187,7 @@ def draw_knot(grid)
     end
   end
 
-  # Bend N
+  # Bends N
   (4..(COLS-3)).step(2) do |j|
     position = Vector[1, j]
     a = grid[*position]
@@ -224,7 +226,25 @@ def draw_knot(grid)
   d.A sm_r, sm_r, 0, 0, 0, Point.midpoint(ne.i[:e], ne2.i[:s])
   d.L a.o[:e_nw]
 
-  # Bend S
+  # Bends E
+  (1..(ROWS-6)).step(2) do |i|
+    position = Vector[i, COLS-3]
+    a = grid[*position]
+
+    se = grid[*position + Vector[1, 1]]
+    se2 = grid[*position + Vector[2, 2]]
+    b = grid[*position + Vector[3, 1]]
+    d.M a.o[:e_sw]
+    d.L Point.midpoint(se.i[:e], se2.i[:n])
+    d.A b_r, b_r, 0, 0, 1, Point.midpoint(se2.i[:s], b.i[:e])
+    d.L b.o[:e_nw]
+    d.L b.o[:n_se]
+    d.L Point.midpoint(se2.i[:w], b.i[:n])
+    d.A sm_r, sm_r, 0, 0, 0, Point.midpoint(se.i[:s], se2.i[:w])
+    d.L a.o[:s_ne]
+  end
+
+  # Bends S
   (2..(COLS-5)).step(2) do |j|
     position = Vector[ROWS-2, j]
     a = grid[*position]
