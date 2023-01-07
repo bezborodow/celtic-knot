@@ -162,6 +162,7 @@ def draw_knot(grid)
     e = grid[*position]
 
     if i == 2
+      # Bend SE
       sw = grid[*position + direction / 2]
       ne = grid[*position + Vector[-1, 1]]
       e2 = grid[*position + Vector[0, 2]]
@@ -174,18 +175,26 @@ def draw_knot(grid)
       d.L Point.midpoint(ne.i[:e], e2.i[:n])
       d.A 1, 1, 0, 0, 1, Point.midpoint(e.i[:s], sw.i[:w])
       d.L e.o[:s_ne]
+      direction = Vector[-2, -2]
+      position += Vector[-2, 0]
+    elsif direction == Vector[-2, -2]
+      nw = grid[*position + direction]
+      d.M nw.o[:e_sw]
+      d.L e.o[:n_sw]
+      d.L e.o[:w_ne]
+      d.L nw.o[:s_ne]
     else
       sw = grid[*position + direction]
       d.M e.o[:e_sw]
       d.L sw.o[:n_sw]
       d.L sw.o[:w_ne]
       d.L e.o[:s_ne]
+
+      position += direction
     end
 
-    position += direction
-
     i += 1
-    direction = false if i > 2
+    direction = false if i > 3
   end
 
   d.z
