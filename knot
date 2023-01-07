@@ -77,6 +77,38 @@ class Grid < Matrix
   def nw
     rel -1, -1
   end
+
+  def n2
+    rel -2, 0
+  end
+
+  def ne2
+    rel -2, 2
+  end
+
+  def e2
+    rel 0, 2
+  end
+
+  def se2
+    rel 2, 2
+  end
+
+  def s2
+    rel 2, 0
+  end
+
+  def sw2
+    rel 2, -2
+  end
+
+  def w2
+    rel 0, -2
+  end
+
+  def nw2
+    rel -2, -2
+  end
 end
 
 class Path
@@ -208,10 +240,9 @@ def draw_knot(grid)
     (2..(COLS-5)).step(2) do |j|
       a = grid.position i, j
 
-      sw2 = grid.rel 2, 2
       d.M a.o[:e_sw]
-      d.L sw2.o[:n_sw]
-      d.L sw2.o[:w_ne]
+      d.L grid.se2.o[:n_sw]
+      d.L grid.se2.o[:w_ne]
       d.L a.o[:s_ne]
     end
   end
@@ -221,10 +252,9 @@ def draw_knot(grid)
     (1..(COLS-4)).step(2) do |j|
       a = grid.position i, j
 
-      nw2 = grid.rel -2, 2
       d.M a.o[:e_nw]
-      d.L nw2.o[:s_nw]
-      d.L nw2.o[:w_se]
+      d.L grid.ne2.o[:s_nw]
+      d.L grid.ne2.o[:w_se]
       d.L a.o[:n_se]
     end
   end
@@ -232,37 +262,31 @@ def draw_knot(grid)
   # Bends N
   (4..(COLS-3)).step(2) do |j|
     a = grid.position 1, j
-
-    w2 = grid.rel 0, -2
     b = grid.rel 1, -3
 
     d.M a.o[:w_ne]
     d.L mp = Point.midpoint(a.i[:w], grid.nw.i[:s])
     sm_r = Point.distance(mp, grid.w.c)
-    d.A sm_r, sm_r, 0, 0, 0, Point.midpoint(w2.i[:e], grid.nw.i[:s])
+    d.A sm_r, sm_r, 0, 0, 0, Point.midpoint(grid.w2.i[:e], grid.nw.i[:s])
     d.L b.o[:e_nw]
     d.L b.o[:n_se]
-    d.L mp = Point.midpoint(grid.nw.i[:w], w2.i[:n])
+    d.L mp = Point.midpoint(grid.nw.i[:w], grid.w2.i[:n])
     b_r = Point.distance(mp, grid.w.c)
     d.A b_r, b_r, 0, 0, 1, Point.midpoint(a.i[:n], grid.nw.i[:e])
     d.L a.o[:n_sw]
   end
   
   # Bend NE
-  position = Vector[2, COLS-4]
-  a = grid[*position]
+  a = grid.position 2, COLS-4
+  b = grid.rel -1, 3
 
-  ne = grid[*position + Vector[-1, 1]]
-  ne2 = grid[*position + Vector[-2, 2]]
-  e2 = grid[*position + Vector[0, 2]]
-  b = grid[*position + Vector[-1, 3]]
   d.M a.o[:n_se]
-  d.L Point.midpoint(ne.i[:n], ne2.i[:w])
-  d.A b_r, b_r, 0, 0, 1, Point.midpoint(e2.i[:e], b.i[:s])
-  d.L e2.o[:e_nw]
-  d.L e2.o[:n_se]
-  d.L Point.midpoint(e2.i[:n], b.i[:w])
-  d.A sm_r, sm_r, 0, 0, 0, Point.midpoint(ne.i[:e], ne2.i[:s])
+  d.L Point.midpoint(grid.ne.i[:n], grid.ne2.i[:w])
+  d.A b_r, b_r, 0, 0, 1, Point.midpoint(grid.e2.i[:e], b.i[:s])
+  d.L grid.e2.o[:e_nw]
+  d.L grid.e2.o[:n_se]
+  d.L Point.midpoint(grid.e2.i[:n], b.i[:w])
+  d.A sm_r, sm_r, 0, 0, 0, Point.midpoint(grid.ne.i[:e], grid.ne2.i[:s])
   d.L a.o[:e_nw]
 
   # Bends E
@@ -332,6 +356,13 @@ def draw_knot(grid)
   d.L Point.midpoint(s2.i[:e], se.i[:s])
   d.A b_r, b_r, 0, 0, 1, Point.midpoint(a.i[:w], sw.i[:n])
   d.L a.o[:w_se]
+
+  # Bends W
+  (2..(ROWS-5)).step(2) do |i|
+    a = grid.position i, 1
+
+    d.M a.o[:s_nw]
+  end
 
   d.z
 end
