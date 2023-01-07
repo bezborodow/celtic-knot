@@ -54,6 +54,10 @@ class Path
     @path.push __method__, m.x, m.y
   end
 
+  def A(rx, ry, x_axis_rotation, large_arc, sweep, m)
+    @path.push __method__, rx, ry, x_axis_rotation, large_arc, sweep, m.x, m.y
+  end
+
   def z
     @path.push 'z'
     @path.join(' ')
@@ -157,16 +161,26 @@ def draw_knot(grid)
   while direction
     e = grid[*position]
 
-    sw = grid[*position + direction]
-    d.M e.o[:e_sw]
-    d.L sw.o[:n_sw]
-    d.L sw.o[:w_ne]
-    d.L e.o[:s_ne]
+    if i == 2
+      sw = grid[*position + direction / 2]
+      ne = grid[*position + Vector[-1, 1]]
+      e2 = grid[*position + Vector[0, 2]]
+      d.M e.o[:e_sw]
+      d.L Point.midpoint(e.i[:e], sw.i[:n])
+      d.A 1, 1, 0, 1, 0, Point.midpoint(ne.i[:s], e2.i[:w])
+      d.L ne.o[:s_ne]
+    else
+      sw = grid[*position + direction]
+      d.M e.o[:e_sw]
+      d.L sw.o[:n_sw]
+      d.L sw.o[:w_ne]
+      d.L e.o[:s_ne]
+    end
 
     position += direction
 
     i += 1
-    direction = false if i > 1
+    direction = false if i > 2
   end
 
   d.z
