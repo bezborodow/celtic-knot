@@ -3,10 +3,6 @@ require 'nokogiri'
 require 'open-uri'
 require 'matrix'
 
-W = 1200
-H = 900
-CX = W / 2
-CY = H / 2
 BG = '#012169'
 LINE = '#C8102E'
 STROKE = 'white'
@@ -15,6 +11,8 @@ VERT = 3
 ROWS = VERT * 2 + 1
 COLS = HORIZ * 2 + 1
 GRIDSIZE = 100
+W = GRIDSIZE * COLS
+H = GRIDSIZE * ROWS
 INNER_WIDTH = 20
 STROKE_WIDTH = 10
 
@@ -197,13 +195,13 @@ def draw_knot(grid)
 
     d.M a.o[:w_ne]
     d.L mp = Point.midpoint(a.i[:w], nw.i[:s])
-    r = Point.distance(mp, w.c)
-    d.A r, r, 0, 0, 0, Point.midpoint(w2.i[:e], nw.i[:s])
+    sm_r = Point.distance(mp, w.c)
+    d.A sm_r, sm_r, 0, 0, 0, Point.midpoint(w2.i[:e], nw.i[:s])
     d.L b.o[:e_nw]
     d.L b.o[:n_se]
     d.L mp = Point.midpoint(nw.i[:w], w2.i[:n])
-    r = Point.distance(mp, w.c)
-    d.A r, r, 0, 0, 1, Point.midpoint(a.i[:n], nw.i[:e])
+    b_r = Point.distance(mp, w.c)
+    d.A b_r, b_r, 0, 0, 1, Point.midpoint(a.i[:n], nw.i[:e])
     d.L a.o[:n_sw]
   end
 
@@ -233,8 +231,8 @@ Nokogiri::XML::Node.new 'svg', doc do |svg|
   doc.add_child svg
   svg[:xmlns] = 'http://www.w3.org/2000/svg'
   svg[:viewBox] = "0 0 #{W} #{H}"
-  svg[:width] = 1200
-  svg[:height] = 900
+  svg[:width] = W
+  svg[:height] = H
 
   # Background.
   Nokogiri::XML::Node.new 'path', doc do |path|
