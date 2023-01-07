@@ -114,11 +114,11 @@ def draw_grid(doc, svg, grid)
     svg.add_child g
     g[:fill] = 'white'
 
-    grid.each do |e|
+    grid.each do |a|
       Nokogiri::XML::Node.new 'circle', doc do |circle|
         g.add_child circle
-        circle[:cx] = e.c.x
-        circle[:cy] = e.c.y
+        circle[:cx] = a.c.x
+        circle[:cy] = a.c.y
         circle[:r] = 1
       end
     end
@@ -128,8 +128,8 @@ def draw_grid(doc, svg, grid)
     svg.add_child g
     g[:fill] = 'cyan'
 
-    grid.each do |e|
-      e.i.each do |k, v|
+    grid.each do |a|
+      a.i.each do |k, v|
         Nokogiri::XML::Node.new 'circle', doc do |circle|
           g.add_child circle
           circle[:cx] = v.x
@@ -139,8 +139,8 @@ def draw_grid(doc, svg, grid)
       end
     end
 
-    grid.each do |e|
-      e.o.each do |k, v|
+    grid.each do |a|
+      a.o.each do |k, v|
         Nokogiri::XML::Node.new 'circle', doc do |circle|
           g.add_child circle
           circle[:cx] = v.x
@@ -181,45 +181,21 @@ def draw_knot(grid)
     end
   end
 
-  i = 0
-  while false
-    e = grid[*position]
-
-    if i == 2
-      # Bend SE
-      sw = grid[*position + direction / 2]
-      ne = grid[*position + Vector[-1, 1]]
-      e2 = grid[*position + Vector[0, 2]]
-      n2 = grid[*position + Vector[-2, 0]]
-      d.M e.o[:e_sw]
-      d.L Point.midpoint(e.i[:e], sw.i[:n])
-      d.A 1, 1, 0, 0, 0, Point.midpoint(ne.i[:s], e2.i[:w])
-      d.L n2.o[:s_ne]
-      d.L n2.o[:e_sw]
-      d.L Point.midpoint(ne.i[:e], e2.i[:n])
-      d.A 1, 1, 0, 0, 1, Point.midpoint(e.i[:s], sw.i[:w])
-      d.L e.o[:s_ne]
-      direction = Vector[-2, -2]
-      position += Vector[-2, 0]
-    elsif direction == Vector[-2, -2]
-      nw = grid[*position + direction]
-      d.M nw.o[:e_sw]
-      d.L e.o[:n_sw]
-      d.L e.o[:w_ne]
-      d.L nw.o[:s_ne]
-    else
-      sw = grid[*position + direction]
-      d.M e.o[:e_sw]
-      d.L sw.o[:n_sw]
-      d.L sw.o[:w_ne]
-      d.L e.o[:s_ne]
-
-      position += direction
-    end
-
-    i += 1
-    direction = false if i > 3
-  end
+  # Bend SE
+  position = Vector[ROWS-2, COLS-3]
+  a = grid[*position]
+  sw = grid[*position + Vector[2, 2] / 2]
+  ne = grid[*position + Vector[-1, 1]]
+  e2 = grid[*position + Vector[0, 2]]
+  n2 = grid[*position + Vector[-2, 0]]
+  d.M a.o[:e_sw]
+  d.L Point.midpoint(a.i[:e], sw.i[:n])
+  d.A 1, 1, 0, 0, 0, Point.midpoint(ne.i[:s], e2.i[:w])
+  d.L n2.o[:s_ne]
+  d.L n2.o[:e_sw]
+  d.L Point.midpoint(ne.i[:e], e2.i[:n])
+  d.A 1, 1, 0, 0, 1, Point.midpoint(a.i[:s], sw.i[:w])
+  d.L a.o[:s_ne]
 
   d.z
 end
