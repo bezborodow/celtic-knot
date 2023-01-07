@@ -45,6 +45,38 @@ class Grid < Matrix
   def rel x, y
     self[*@position + Vector[x, y]]
   end
+
+  def n
+    rel -1, 0
+  end
+
+  def ne
+    rel -1, 1
+  end
+
+  def e
+    rel 0, 1
+  end
+
+  def se
+    rel 1, 1
+  end
+
+  def s
+    rel 1, 0
+  end
+
+  def sw
+    rel 1, -1
+  end
+
+  def w
+    rel 0, -1
+  end
+
+  def nw
+    rel -1, -1
+  end
 end
 
 class Path
@@ -187,10 +219,9 @@ def draw_knot(grid)
   # Diagonals left.
   (4..(ROWS-2)).step(2) do |i|
     (1..(COLS-4)).step(2) do |j|
-      position = Vector[i, j]
-      a = grid[*position]
+      a = grid.position i, j
 
-      nw2 = grid[*position + Vector[-2, 2]]
+      nw2 = grid.rel -2, 2
       d.M a.o[:e_nw]
       d.L nw2.o[:s_nw]
       d.L nw2.o[:w_se]
@@ -200,23 +231,20 @@ def draw_knot(grid)
 
   # Bends N
   (4..(COLS-3)).step(2) do |j|
-    position = Vector[1, j]
-    a = grid[*position]
+    a = grid.position 1, j
 
-    nw = grid[*position + Vector[-1, -1]]
-    w = grid[*position + Vector[0, -1]]
-    w2 = grid[*position + Vector[0, -2]]
-    b = grid[*position + Vector[1, -3]]
+    w2 = grid.rel 0, -2
+    b = grid.rel 1, -3
 
     d.M a.o[:w_ne]
-    d.L mp = Point.midpoint(a.i[:w], nw.i[:s])
-    sm_r = Point.distance(mp, w.c)
-    d.A sm_r, sm_r, 0, 0, 0, Point.midpoint(w2.i[:e], nw.i[:s])
+    d.L mp = Point.midpoint(a.i[:w], grid.nw.i[:s])
+    sm_r = Point.distance(mp, grid.w.c)
+    d.A sm_r, sm_r, 0, 0, 0, Point.midpoint(w2.i[:e], grid.nw.i[:s])
     d.L b.o[:e_nw]
     d.L b.o[:n_se]
-    d.L mp = Point.midpoint(nw.i[:w], w2.i[:n])
-    b_r = Point.distance(mp, w.c)
-    d.A b_r, b_r, 0, 0, 1, Point.midpoint(a.i[:n], nw.i[:e])
+    d.L mp = Point.midpoint(grid.nw.i[:w], w2.i[:n])
+    b_r = Point.distance(mp, grid.w.c)
+    d.A b_r, b_r, 0, 0, 1, Point.midpoint(a.i[:n], grid.nw.i[:e])
     d.L a.o[:n_sw]
   end
   
