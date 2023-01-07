@@ -206,6 +206,23 @@ def draw_knot(grid)
     d.A b_r, b_r, 0, 0, 1, Point.midpoint(a.i[:n], nw.i[:e])
     d.L a.o[:n_sw]
   end
+  
+  # Bend NE
+  position = Vector[2, COLS-4]
+  a = grid[*position]
+
+  ne = grid[*position + Vector[-1, 1]]
+  ne2 = grid[*position + Vector[-2, 2]]
+  e2 = grid[*position + Vector[0, 2]]
+  b = grid[*position + Vector[-1, 3]]
+  d.M a.o[:n_se]
+  d.L Point.midpoint(ne.i[:n], ne2.i[:w])
+  d.A b_r, b_r, 0, 0, 1, Point.midpoint(e2.i[:e], b.i[:s])
+  d.L e2.o[:e_nw]
+  d.L e2.o[:n_se]
+  d.L Point.midpoint(e2.i[:n], b.i[:w])
+  d.A sm_r, sm_r, 0, 0, 0, Point.midpoint(ne.i[:e], ne2.i[:s])
+  d.L a.o[:e_nw]
 
   # Bend S
   (2..(COLS-5)).step(2) do |j|
