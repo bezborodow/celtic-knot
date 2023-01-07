@@ -239,6 +239,14 @@ def draw_outline(grid)
   d.L Point.midpoint(a.o[:w], grid.nw.o[:s])
   d.A 1, 1, 0, 0, 1, Point.midpoint(grid.ne.o[:n], grid.n2.o[:e])
 
+  (2..(COLS-5)).step(2) do |j|
+    a = grid.position 1, j
+    d.L a.o[:n]
+    d.L mp = Point.midpoint(a.o[:n], grid.ne.o[:w])
+    r = Point.distance(mp, grid.e.c)
+    d.A r, r, 0, 0, 1, Point.midpoint(grid.ne.o[:e], grid.e2.o[:n])
+  end
+
   d.z
 end
 
