@@ -3,8 +3,8 @@ require 'nokogiri'
 require 'open-uri'
 require 'matrix'
 
-W = 800
-H = 600
+W = 1200
+H = 900
 CX = W / 2
 CY = H / 2
 BG = '#012169'
@@ -12,18 +12,24 @@ LINE = '#C8102E'
 STROKE = 'white'
 HORIZ = 4
 VERT = 3
-ROWS = VERT * 2 - 1
-COLS = HORIZ * 2 - 1
+ROWS = VERT * 2 + 1
+COLS = HORIZ * 2 + 1
 GRIDSIZE = 100
 INNER_WIDTH = 20
 STROKE_WIDTH = 10
 
-class Point
-  attr_accessor :x, :y
+class Point < Vector
 
-  def initialize x, y
-    @x = x
-    @y = y
+  def x
+    self[0]
+  end
+
+  def y
+    self[1]
+  end
+
+  def self.midpoint(a, b)
+    (a + b) / 2
   end
 end
 
@@ -68,37 +74,33 @@ class KnotCell
     }
 
     @i = pos.each_with_object({}) do |(k, v), a|
-      a[k] = Point.new(c.x + v[0] * inner,
-                       c.y + v[1] * inner)
+      a[k] = Point[c.x + v[0] * inner,
+                   c.y + v[1] * inner]
     end
 
     @o = pos.each_with_object({}) do |(k, v), a|
-      a[k] = Point.new(c.x + v[0] * outer,
-                       c.y + v[1] * outer)
+      a[k] = Point[c.x + v[0] * outer,
+                   c.y + v[1] * outer]
     end
 
     subpos = [
-      [:n, :sw],
-      [:n, :se],
-      [:e, :sw],
-      [:e, :nw],
-      [:s, :nw],
-      [:s, :ne],
-      [:w, :ne],
-      [:w, :se],
+      [:n, :sw], [:n, :se],
+      [:e, :sw], [:e, :nw],
+      [:s, :nw], [:s, :ne],
+      [:w, :ne], [:w, :se],
     ]
     subpos.each do |v|
       sym = (v[0].to_s << '_' << v[1].to_s).to_sym
-      @o[sym] = Point.new(@o[v[0]].x + stroke * pos[v[1]][0],
-                          @o[v[0]].y + stroke * pos[v[1]][1])
+      @o[sym] = Point[@o[v[0]].x + stroke * pos[v[1]][0],
+                      @o[v[0]].y + stroke * pos[v[1]][1]]
     end
   end
 end
 
 def create_grid
   Matrix.build(ROWS, COLS) do |i, j|
-    c = Point.new(GRIDSIZE * j + GRIDSIZE / 2,
-                  GRIDSIZE * i + GRIDSIZE / 2)
+    c = Point[GRIDSIZE * j + GRIDSIZE / 2,
+              GRIDSIZE * i + GRIDSIZE / 2]
     KnotCell.new(c, INNER_WIDTH, STROKE_WIDTH)
   end
 end
@@ -148,11 +150,11 @@ end
 
 def draw_knot(grid)
   direction = Vector[2, 2]
-  position = Vector[0, 1]
+  position = Vector[1, 2]
 
   d = Path.new
   i = 0
-  while (direction)
+  while direction
     e = grid[*position]
 
     sw = grid[*position + direction]
