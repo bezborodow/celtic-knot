@@ -230,6 +230,18 @@ def draw_grid(doc, svg, grid)
   end
 end
 
+def draw_outline(grid)
+  d = Path.new
+
+  # NE Corner
+  a = grid.position 2, 1
+  d.M a.o[:w]
+  d.L Point.midpoint(a.o[:w], grid.nw.o[:s])
+  d.A 1, 1, 0, 0, 1, Point.midpoint(grid.ne.o[:n], grid.n2.o[:e])
+
+  d.z
+end
+
 def draw_knot(grid)
   d = Path.new
   sm_r = nil
@@ -389,6 +401,16 @@ Nokogiri::XML::Node.new 'svg', doc do |svg|
 
   Nokogiri::XML::Node.new 'g', doc do |g|
     svg.add_child g
+    g[:fill] = STROKE
+
+    Nokogiri::XML::Node.new 'path', doc do |path|
+      g.add_child path
+      path[:d] = draw_outline grid
+    end
+  end
+
+  Nokogiri::XML::Node.new 'g', doc do |g|
+    svg.add_child g
     g[:fill] = LINE
 
     Nokogiri::XML::Node.new 'path', doc do |path|
@@ -396,6 +418,7 @@ Nokogiri::XML::Node.new 'svg', doc do |svg|
       path[:d] = draw_knot grid
     end
   end
+
   draw_grid doc, svg, grid
 end
 
