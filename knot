@@ -269,12 +269,20 @@ def draw_outline(grid)
   d.L Point.midpoint(a.o[:e], grid.se.o[:n])
   d.A r, r, 0, 0, 1, Point.midpoint(grid.sw.o[:s], grid.s2.o[:w])
 
+  # S Corners.
+  (COLS-3).step(4, -2) do |j|
+    a = grid.position ROWS-2, j
+    d.L a.o[:s]
+    d.L Point.midpoint(a.o[:s], grid.sw.o[:e])
+    d.A r, r, 0, 0, 1, Point.midpoint(grid.sw.o[:w], grid.w2.o[:s])
+  end
+
   d.z
 end
 
 def draw_knot(grid)
   d = Path.new
-  sm_r = nil # TODO Bring out.
+  sm_r = nil # TODO Bring out. This is probably a cause of a bug at small sizes.
   b_r = nil # TODO Bring out.
 
   # Diagonals right.
