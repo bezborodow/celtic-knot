@@ -283,6 +283,15 @@ def draw_outline(grid)
   d.L Point.midpoint(a.o[:s], grid.sw.o[:e])
   d.A r, r, 0, 0, 1, Point.midpoint(grid.nw.o[:w], grid.w2.o[:n])
 
+  # W Corners.
+  (ROWS-3).step(4, -2) do |i|
+    a = grid.position i, 1
+    d.L a.o[:w]
+    d.L Point.midpoint(a.o[:w], grid.nw.o[:s])
+    d.A r, r, 0, 0, 1, Point.midpoint(grid.nw.o[:n], grid.n2.o[:w])
+    # TODO Refactor Point.midpoint to grid.midpoint.
+  end
+
   d.z
 end
 
