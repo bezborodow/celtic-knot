@@ -277,6 +277,12 @@ def draw_outline(grid)
     d.A r, r, 0, 0, 1, Point.midpoint(grid.sw.o[:w], grid.w2.o[:s])
   end
 
+  # SW Corner.
+  a = grid.position ROWS-2, 2
+  d.L a.o[:s]
+  d.L Point.midpoint(a.o[:s], grid.sw.o[:e])
+  d.A r, r, 0, 0, 1, Point.midpoint(grid.nw.o[:w], grid.w2.o[:n])
+
   d.z
 end
 
