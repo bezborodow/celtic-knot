@@ -239,6 +239,7 @@ def draw_outline(grid)
   d.L Point.midpoint(a.o[:w], grid.nw.o[:s])
   d.A 1, 1, 0, 0, 1, Point.midpoint(grid.ne.o[:n], grid.n2.o[:e])
 
+  # N Corners.
   (2..(COLS-5)).step(2) do |j|
     a = grid.position 1, j
     d.L a.o[:n]
@@ -407,9 +408,26 @@ Nokogiri::XML::Node.new 'svg', doc do |svg|
     path[:fill] = BG
   end
 
+  # Stroke Mask
+  Nokogiri::XML::Node.new 'mask', doc do |mask|
+    svg.add_child mask
+    mask[:id] = 'strokeMask'
+
+    Nokogiri::XML::Node.new 'path', doc do |path|
+      mask.add_child path
+      path[:d] = "M0,0 v#{H} h#{W} v-#{H} z"
+      path[:fill] = 'white'
+    end
+
+    # TODO put mask here.
+  end
+
+
+  # Outline stroke
   Nokogiri::XML::Node.new 'g', doc do |g|
     svg.add_child g
     g[:fill] = STROKE
+    g[:mask] = 'url(#strokeMask)'
 
     Nokogiri::XML::Node.new 'path', doc do |path|
       g.add_child path
@@ -417,6 +435,7 @@ Nokogiri::XML::Node.new 'svg', doc do |svg|
     end
   end
 
+  # Knot line
   Nokogiri::XML::Node.new 'g', doc do |g|
     svg.add_child g
     g[:fill] = LINE
