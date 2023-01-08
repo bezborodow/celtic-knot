@@ -148,6 +148,8 @@ class Cell
   def initialize(c, inner, stroke)
     outer = inner + stroke
 
+    # TODO Use dig
+    # @link https://ruby-doc.org/core-2.3.1/Hash.html#method-i-dig
     @c = c
 
     pos = {
@@ -490,7 +492,7 @@ Nokogiri::XML::Node.new 'svg', doc do |svg|
     end
   end
 
-  draw_grid doc, svg, grid
+  #draw_grid doc, svg, grid
 end
 
 puts doc.to_xml indent:2
