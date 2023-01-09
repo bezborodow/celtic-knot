@@ -5,23 +5,7 @@ require 'matrix'
 require 'optparse'
 require_relative 'lib/knot'
 
-class Point < Vector
-  def x
-    self[0]
-  end
-
-  def y
-    self[1]
-  end
-
-  def self.midpoint(a, b)
-    (a + b) / 2
-  end
-
-  def self.distance(a, b)
-    (a - b).magnitude
-  end
-end
+Point = Knot::Point
 
 class Grid < Matrix
   attr_reader :position

@@ -1,8 +1,5 @@
-# frozen_string_literal: true
-
-require_relative "knot/version"
+require_relative "knot/point"
 
 module Knot
   class Error < StandardError; end
-
 end
