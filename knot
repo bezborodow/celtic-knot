@@ -3,6 +3,7 @@ require 'nokogiri'
 require 'open-uri'
 require 'matrix'
 require 'optparse'
+require_relative 'lib/knot'
 
 class Point < Vector
   def x
