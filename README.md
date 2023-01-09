@@ -97,7 +97,7 @@ The grid is a [`Matrix`](https://ruby-doc.org/stdlib-3.0.2/libdoc/matrix/rdoc/Ma
 
 #### `Knot::Cell`
 
-Each cell within the grid contains a number of cartesian points. These points are precaclulated so that minimal calculations are required when pathing.
+Each cell within the grid contains several cartesian points stored in hashes. These points are precaclulated so that minimal calculations are required when pathing.
 
 #### `Knot::Point < Vector`
 
