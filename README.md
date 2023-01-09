@@ -89,6 +89,12 @@ The programme generates SVG output using the [Nokogiri](https://nokogiri.org/) l
 
 The knot is modelled as a two dimensional matrix (`Knot::Grid`), which itself contains cells (`Knot::Cell`), which then contains absolutely positioned precalculated points (`Knot::Point`) that are used for pathing by the drawing engine (`Knot`.)
 
+### Modules
+
+#### `Knot`
+
+The drawing engine.
+
 ### Classes
 
 #### `Knot::Grid`
