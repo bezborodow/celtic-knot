@@ -51,7 +51,7 @@ Usage: ./knot [options]
     > examples/ingthine.svg
 ```
 
-#### Bratach (Tricolour)
+#### Bratach (Banner)
 
 ![Bratach knot](https://raw.githubusercontent.com/bezborodow/celtic-knot/main/examples/bratach.svg)
 
