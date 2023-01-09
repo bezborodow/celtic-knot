@@ -79,7 +79,7 @@ $ ./knot \
 The SVG file can be viewed locally in your Web browser or converted into other formats such as [PNG](http://www.libpng.org/pub/png/) using utilities such as ImageMagick's [`convert`](https://imagemagick.org/script/convert.php). For example:
 
 ```
-convert examples/basic.svg examples/basic.png
+convert -background none examples/basic.svg examples/basic.png
 ```
 
 

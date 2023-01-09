@@ -5,7 +5,6 @@ examples/basic.svg: knot
 		--vertical=2 \
 		--horizontal=2 \
 		--cell-size=96 \
-		--background-color='white' \
 		--knot-color='white' \
 		--knot-width=24 \
 		--stroke-color=black \
