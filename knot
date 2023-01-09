@@ -247,6 +247,16 @@ def draw_mask(grid)
       d.L grid.w.o[:e]
     end
   end
+  (3..(ROWS-4)).step(2) do |i|
+    (3..(COLS-4)).step(2) do |j|
+      a = grid.position i, j
+
+      d.M grid.n.o[:s]
+      d.L grid.e.o[:w]
+      d.L grid.s.o[:n]
+      d.L grid.w.o[:e]
+    end
+  end
 
   d.z
 end
