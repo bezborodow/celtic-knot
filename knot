@@ -522,7 +522,15 @@ def draw_knot(grid)
   d.z
 end
 
-options = {}
+options = {
+  vertical: 2,
+  horizontal: 2,
+  grid_size: 96,
+  knot_color: 'white',
+  knot_width: 24,
+  stroke_color: 'black',
+  stroke_width: 8,
+}
 OptionParser.new do |opts|
   opts.banner = "Usage: ./knot [options]"
 
@@ -580,12 +588,14 @@ Nokogiri::XML::Node.new 'svg', doc do |svg|
   svg[:width] = W
   svg[:height] = H
 
+  bg_d = "M0,0 v#{H} h#{W} v-#{H} z";
+
   # Background.
   Nokogiri::XML::Node.new 'path', doc do |path|
     svg.add_child path
-    path[:d] = "M0,0 v#{H} h#{W} v-#{H} z"
+    path[:d] = bg_d
     path[:fill] = options[:background_color]
-  end
+  end if options[:background_color]
 
   # Stroke Mask
   Nokogiri::XML::Node.new 'mask', doc do |mask|
@@ -594,7 +604,7 @@ Nokogiri::XML::Node.new 'svg', doc do |svg|
 
     Nokogiri::XML::Node.new 'path', doc do |path|
       mask.add_child path
-      path[:d] = "M0,0 v#{H} h#{W} v-#{H} z"
+      path[:d] = bg_d
       path[:fill] = 'white'
     end
 
