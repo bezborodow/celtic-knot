@@ -105,7 +105,7 @@ Each point is modelled as a [`Vector[x, y]`](https://ruby-doc.org/stdlib-3.0.2/l
 
 #### `Knot::Point.midpoint(a, b)`
 
-Calculates the midpoint between two `Points`. Used where a desired point has not been precalculated but can instead be derived from another pair of points that *are* precaculated.
+Calculates the midpoint between two `Points`. Used where a desired point has not been precalculated but can instead be derived from another pair of points that *are* precalculated.
 
 ##### `Knot::Point.distance(a, b)`
 
