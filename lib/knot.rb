@@ -12,18 +12,10 @@ module Knot
     r = Point.distance(grid.w.o[:e], grid.n.o[:s]) / 2
 
     # Fill diamonds.
-    (2..(grid.row_count-3)).step(2) do |i|
-      (2..(grid.column_count-3)).step(2) do |j|
-        grid.position i, j
-
-        d.M grid.n.o[:s]
-        d.L grid.e.o[:w]
-        d.L grid.s.o[:n]
-        d.L grid.w.o[:e]
-      end
-    end
-    (3..(grid.row_count-4)).step(2) do |i|
-      (3..(grid.column_count-4)).step(2) do |j|
+    odd = true
+    (2..(grid.row_count-3)).each do |i|
+      (2..(grid.column_count-3)).each do |j|
+        next if odd = !odd
         grid.position i, j
 
         d.M grid.n.o[:s]
