@@ -273,7 +273,7 @@ def draw_mask(grid)
     d.L grid.s.o[:n]
     d.L grid.w.o[:e]
     d.L Point.midpoint(grid.w.o[:e], grid.n.o[:s])
-  d.A r, r, 0, 0, 1, Point.midpoint(grid.n.o[:s], grid.e.o[:w])
+    d.A r, r, 0, 0, 1, Point.midpoint(grid.n.o[:s], grid.e.o[:w])
   end
 
   # NE Diamond.
@@ -282,6 +282,16 @@ def draw_mask(grid)
   d.L grid.w.o[:e]
   d.L Point.midpoint(grid.n.o[:s], grid.w.o[:e])
   d.A r, r, 0, 0, 1, Point.midpoint(grid.s.o[:n], grid.e.o[:w])
+
+  # E Diamonds.
+  (3..(ROWS-4)).step(2) do |i|
+    grid.position i, COLS-2
+    d.M grid.s.o[:n]
+    d.L grid.w.o[:e]
+    d.L grid.n.o[:s]
+    d.L Point.midpoint(grid.e.o[:w], grid.n.o[:s])
+    d.A r, r, 0, 0, 1, Point.midpoint(grid.s.o[:n], grid.e.o[:w])
+  end
 
   d.z
 end
