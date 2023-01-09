@@ -310,6 +310,23 @@ def draw_mask(grid)
     d.A r, r, 0, 0, 1, Point.midpoint(grid.s.o[:n], grid.w.o[:e])
   end
 
+  # SW Diamond.
+  grid.position ROWS-2, 1
+  d.M grid.n.o[:s]
+  d.L grid.e.o[:w]
+  d.L Point.midpoint(grid.s.o[:n], grid.e.o[:w])
+  d.A r, r, 0, 0, 1, Point.midpoint(grid.n.o[:s], grid.w.o[:e])
+
+  # W Diamonds.
+  (ROWS-4).step(3, -2) do |i|
+    a = grid.position i, 1
+    d.M grid.n.o[:s]
+    d.L grid.e.o[:w]
+    d.L grid.s.o[:n]
+    d.L Point.midpoint(grid.s.o[:n], grid.w.o[:e])
+    d.A r, r, 0, 0, 1, Point.midpoint(grid.w.o[:e], grid.n.o[:s])
+  end
+
   d.z
 end
 
