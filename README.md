@@ -109,7 +109,7 @@ Calculates the midpoint between two `Points`. Used where a desired point has not
 
 Calculates the distance between two `Points`. Used for calculating radii for arc curves.
 
-### `Knot::Path`
+#### `Knot::Path`
 
 Models an [SVG path](https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths).
 
