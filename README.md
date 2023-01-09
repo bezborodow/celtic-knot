@@ -1,5 +1,7 @@
 # `celtic-knot` Celtic Knot Cartesian Grid Matrix Pattern Generator for Scaleable Vector Graphics
 
+`celtic-knot` is a [Ruby](https://www.ruby-lang.org/en/) programme that writes an [SVG](https://developer.mozilla.org/en-US/docs/Web/SVG) (Scaleable Vector Graphics) file to standard output based upon the below given parameters.
+
 ## Synopsis
 
 ```
@@ -72,7 +74,13 @@ $ ./knot \
 
 ## Internals
 
+The programme generates SVG output using the [Nokogiri](https://nokogiri.org/) library for [XML](https://www.w3.org/standards/xml/core).
+
+The knot is modelled as a two dimensional matrix (`Knot::Grid`), which itself contains cells (`Knot::Cell`), which then contains absolutely positioned precalculated points (`Knot::Point`) that are used for pathing by the drawing engine (`Knot`.)
+
 ### `Knot::Grid`
+
+https://ruby-doc.org/stdlib-3.0.2/libdoc/matrix/rdoc/Matrix.html
 
 ### `Knot::Cell`
 
