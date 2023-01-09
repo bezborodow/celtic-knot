@@ -7,7 +7,7 @@ Usage: ./knot [options]
     -h, --help                       Prints this help
     -V, --vertical=VERTICAL          Number of cells vertically.
     -H, --horizontal=HORIZONTAL      Number of cells horizontally.
-    -G, --cell-size=GRID_SIZE        Dimensions of each cell in the grid.
+    -G, --cell-size=CELL_SIZE        Dimensions of each cell in the grid.
     -b, --background-color=BG_COLOR  Background colour.
     -k, --knot-color=KNOT_COLOR      Knot colour.
     -K, --knot-width=KNOT_WIDTH      Knot width.
