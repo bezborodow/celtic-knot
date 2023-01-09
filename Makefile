@@ -1,4 +1,4 @@
-all: examples/basic.svg examples/ingthine.svg examples/bratach.svg
+all: examples/basic.svg examples/ingwine.svg examples/bratach.svg
 
 examples/basic.svg: knot
 	./knot \
@@ -11,7 +11,7 @@ examples/basic.svg: knot
 		--stroke-width=8 \
 		> examples/basic.svg
 
-examples/ingthine.svg: knot
+examples/ingwine.svg: knot
 	./knot \
 		--vertical=3 \
 		--horizontal=4 \
@@ -21,7 +21,7 @@ examples/ingthine.svg: knot
 		--knot-width=32 \
 		--stroke-color=white \
 		--stroke-width=16 \
-		> examples/ingthine.svg
+		> examples/ingwine.svg
 
 examples/bratach.svg: knot
 	./knot \

@@ -41,7 +41,7 @@ $ ./knot \
 
 #### Ingƿine
 
-![Ingƿine knot](https://raw.githubusercontent.com/bezborodow/celtic-knot/main/examples/ingthine.svg)
+![Ingƿine knot](https://raw.githubusercontent.com/bezborodow/celtic-knot/main/examples/ingwine.svg)
 
 ```
 $ ./knot \
@@ -53,7 +53,7 @@ $ ./knot \
     --knot-width=32 \
     --stroke-color=white \
     --stroke-width=16 \
-    > examples/ingthine.svg
+    > examples/ingwine.svg
 ```
 
 #### Bratach (Banner)
