@@ -103,17 +103,19 @@ Each cell within the grid contains several cartesian points stored in hashes. Th
 
 Each point is modelled as a [`Vector[x, y]`](https://ruby-doc.org/stdlib-3.0.2/libdoc/matrix/rdoc/Vector.html).
 
-##### `Knot::Point.midpoint(a, b)`
-
-Calculates the midpoint between two `Points`. Used where a desired point has not been precalculated but can instead be derived from another pair of points that *are* precalculated.
-
-##### `Knot::Point.distance(a, b)`
-
-Calculates the distance between two `Points`. Used for calculating radii for arc curves.
-
 #### `Knot::Path`
 
 Models an [SVG path](https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths).
+
+### Class Methods
+
+#### `Knot::Point.midpoint(a, b)`
+
+Calculates the midpoint between two points. Used where a desired point has not been precalculated but can instead be derived from another pair of points that *are* precalculated.
+
+#### `Knot::Point.distance(a, b)`
+
+Calculates the distance between two points. Used for calculating radii for arc curves.
 
 ## Author
 
