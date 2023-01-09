@@ -91,7 +91,7 @@ The knot is modelled as a two dimensional matrix (`Knot::Grid`), which itself co
 
 ### Classes
 
-#### `Knot::Grid < Matrix`
+#### `Knot::Grid`
 
 The grid is a [`Matrix`](https://ruby-doc.org/stdlib-3.0.2/libdoc/matrix/rdoc/Matrix.html) of cells. The grid can be nagivated with absolute coordinates using the `position(x, y)` method and nearby cells accessed relatively using the `rel(x, y)` method.
 
@@ -99,7 +99,7 @@ The grid is a [`Matrix`](https://ruby-doc.org/stdlib-3.0.2/libdoc/matrix/rdoc/Ma
 
 Each cell within the grid contains several cartesian points stored in hashes. These points are precaclulated so that minimal calculations are required when pathing.
 
-#### `Knot::Point < Vector`
+#### `Knot::Point`
 
 Each point is modelled as a [`Vector[x, y]`](https://ruby-doc.org/stdlib-3.0.2/libdoc/matrix/rdoc/Vector.html).
 
@@ -107,11 +107,11 @@ Each point is modelled as a [`Vector[x, y]`](https://ruby-doc.org/stdlib-3.0.2/l
 
 Calculates the midpoint between two `Points`. Used where a desired point has not been precalculated but can instead be derived from another pair of points that *are* precaculated.
 
-#### `Knot::Point.distance(a, b)`
+##### `Knot::Point.distance(a, b)`
 
 Calculates the distance between two `Points`. Used for calculating radii for arc curves.
 
-#### `Knot::Path`
+##### `Knot::Path`
 
 Models an [SVG path](https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths).
 
