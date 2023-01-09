@@ -1,3 +1,8 @@
+# Knot::Path
+#
+# Models an SVG path.
+#
+# @link https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths
 module Knot
   class Path
     def initialize
@@ -21,6 +26,10 @@ module Knot
     end
 
     def A(rx, ry, x_axis_rotation, large_arc, sweep, m)
+      @path.push __method__, rx, ry, x_axis_rotation, large_arc, sweep, m.x, m.y
+    end
+
+    def a(rx, ry, x_axis_rotation, large_arc, sweep, m)
       @path.push __method__, rx, ry, x_axis_rotation, large_arc, sweep, m.x, m.y
     end
 
