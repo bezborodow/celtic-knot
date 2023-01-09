@@ -543,7 +543,7 @@ OptionParser.new do |opts|
     options[:grid_size] = opt
   end
 
-  opts.on("-bBACKGROUND_COLOR", "--background-color=BACKGROUND_COLOR", "Background colour.") do |opt|
+  opts.on("-bBG_COLOR", "--background-color=BG_COLOR", "Background colour.") do |opt|
     options[:background_color] = opt
   end
 
