@@ -1,6 +1,6 @@
 # `celtic-knot` Celtic Knot Cartesian Grid Matrix Pattern Generator for Scaleable Vector Graphics
 
-**`celtic-knot`** is a [Ruby](https://www.ruby-lang.org/en/) programme that creates celtic knot drawings based upon a given set of parameters.
+**`celtic-knot`** is a [Ruby](https://www.ruby-lang.org/en/) programme that creates simple rectangular celtic knot drawings based upon a given set of parameters.
 
 ## Synopsis
 
