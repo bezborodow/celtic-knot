@@ -26,8 +26,8 @@ bratach.svg: knot
 
 basic.svg: knot
 	./knot \
-		--vertical=3 \
-		--horizontal=3 \
+		--vertical=2 \
+		--horizontal=2 \
 		--grid-size=96 \
 		--background-color='white' \
 		--knot-color='white' \

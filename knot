@@ -136,8 +136,6 @@ class Cell
   def initialize(c, inner, stroke)
     outer = inner + stroke
 
-    # TODO Use dig
-    # @link https://ruby-doc.org/core-2.3.1/Hash.html#method-i-dig
     @c = c
 
     pos = {
@@ -320,7 +318,8 @@ end
 
 def draw_outline(grid)
   d = Path.new
-  r = nil # TODO Bring out of blocks.
+  a = grid.position 1, 1
+  r = Point.distance(a.o[:se], grid.nw.o[:nw]) / 2
 
   # NW Corner.
   a = grid.position 2, 1
@@ -332,8 +331,7 @@ def draw_outline(grid)
   (2..(COLS-5)).step(2) do |j|
     a = grid.position 1, j
     d.L a.o[:n]
-    d.L mp = Point.midpoint(a.o[:n], grid.ne.o[:w])
-    r = Point.distance(mp, grid.e.c)
+    d.L Point.midpoint(a.o[:n], grid.ne.o[:w])
     d.A r, r, 0, 0, 1, Point.midpoint(grid.ne.o[:e], grid.e2.o[:n])
   end
 
@@ -377,7 +375,6 @@ def draw_outline(grid)
     d.L a.o[:w]
     d.L Point.midpoint(a.o[:w], grid.nw.o[:s])
     d.A r, r, 0, 0, 1, Point.midpoint(grid.nw.o[:n], grid.n2.o[:w])
-    # TODO Refactor Point.midpoint to grid.midpoint.
   end
 
   d.z
@@ -385,8 +382,11 @@ end
 
 def draw_knot(grid)
   d = Path.new
-  sm_r = nil # TODO Bring out. This is probably a cause of a bug at small sizes.
-  b_r = nil # TODO Bring out.
+  a = grid.position 2, 2
+  mp = Point.midpoint(a.i[:w], grid.nw.i[:s])
+  sm_r = Point.distance(mp, grid.w.c)
+  mp = Point.midpoint(grid.nw.i[:w], grid.w2.i[:n])
+  b_r = Point.distance(mp, grid.w.c)
 
   # Diagonals right.
   (1..(ROWS-3)).step(2) do |i|
@@ -418,13 +418,12 @@ def draw_knot(grid)
     b = grid.rel 1, -3
 
     d.M a.o[:w_ne]
-    d.L mp = Point.midpoint(a.i[:w], grid.nw.i[:s])
-    sm_r = Point.distance(mp, grid.w.c)
+    d.L Point.midpoint(a.i[:w], grid.nw.i[:s])
+    Point.distance(mp, grid.w.c)
     d.A sm_r, sm_r, 0, 0, 0, Point.midpoint(grid.w2.i[:e], grid.nw.i[:s])
     d.L b.o[:e_nw]
     d.L b.o[:n_se]
-    d.L mp = Point.midpoint(grid.nw.i[:w], grid.w2.i[:n])
-    b_r = Point.distance(mp, grid.w.c)
+    d.L Point.midpoint(grid.nw.i[:w], grid.w2.i[:n])
     d.A b_r, b_r, 0, 0, 1, Point.midpoint(a.i[:n], grid.nw.i[:e])
     d.L a.o[:n_sw]
   end
