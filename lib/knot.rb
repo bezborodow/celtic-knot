@@ -12,8 +12,8 @@ module Knot
     r = Point.distance(grid.w.o[:e], grid.n.o[:s]) / 2
 
     # Fill diamonds.
-    (2..(ROWS-3)).step(2) do |i|
-      (2..(COLS-3)).step(2) do |j|
+    (2..(grid.row_count-3)).step(2) do |i|
+      (2..(grid.column_count-3)).step(2) do |j|
         grid.position i, j
 
         d.M grid.n.o[:s]
@@ -22,8 +22,8 @@ module Knot
         d.L grid.w.o[:e]
       end
     end
-    (3..(ROWS-4)).step(2) do |i|
-      (3..(COLS-4)).step(2) do |j|
+    (3..(grid.row_count-4)).step(2) do |i|
+      (3..(grid.column_count-4)).step(2) do |j|
         grid.position i, j
 
         d.M grid.n.o[:s]
@@ -41,7 +41,7 @@ module Knot
     d.A r, r, 0, 0, 1, Point.midpoint(grid.n.o[:s], grid.e.o[:w])
 
     # N Diamonds.
-    (3..(COLS-4)).step(2) do |j|
+    (3..(grid.column_count-4)).step(2) do |j|
       grid.position 1, j
       d.M grid.e.o[:w]
       d.L grid.s.o[:n]
@@ -51,15 +51,15 @@ module Knot
     end
 
     # NE Diamond.
-    grid.position 1, COLS-2
+    grid.position 1, grid.column_count-2
     d.M grid.s.o[:n]
     d.L grid.w.o[:e]
     d.L Point.midpoint(grid.n.o[:s], grid.w.o[:e])
     d.A r, r, 0, 0, 1, Point.midpoint(grid.s.o[:n], grid.e.o[:w])
 
     # E Diamonds.
-    (3..(ROWS-4)).step(2) do |i|
-      grid.position i, COLS-2
+    (3..(grid.row_count-4)).step(2) do |i|
+      grid.position i, grid.column_count-2
       d.M grid.s.o[:n]
       d.L grid.w.o[:e]
       d.L grid.n.o[:s]
@@ -68,15 +68,15 @@ module Knot
     end
 
     # SE Diamond.
-    grid.position ROWS-2, COLS-2
+    grid.position grid.row_count-2, grid.column_count-2
     d.M grid.w.o[:e]
     d.L grid.n.o[:s]
     d.L Point.midpoint(grid.n.o[:s], grid.e.o[:w])
     d.A r, r, 0, 0, 1, Point.midpoint(grid.s.o[:n], grid.w.o[:e])
 
     # S Diamonds.
-    (COLS-4).step(3, -2) do |j|
-      grid.position ROWS-2, j
+    (grid.column_count-4).step(3, -2) do |j|
+      grid.position grid.row_count-2, j
       d.M grid.w.o[:e]
       d.L grid.n.o[:s]
       d.L grid.e.o[:w]
@@ -85,14 +85,14 @@ module Knot
     end
 
     # SW Diamond.
-    grid.position ROWS-2, 1
+    grid.position grid.row_count-2, 1
     d.M grid.n.o[:s]
     d.L grid.e.o[:w]
     d.L Point.midpoint(grid.s.o[:n], grid.e.o[:w])
     d.A r, r, 0, 0, 1, Point.midpoint(grid.n.o[:s], grid.w.o[:e])
 
     # W Diamonds.
-    (ROWS-4).step(3, -2) do |i|
+    (grid.row_count-4).step(3, -2) do |i|
       a = grid.position i, 1
       d.M grid.n.o[:s]
       d.L grid.e.o[:w]
@@ -116,7 +116,7 @@ module Knot
     d.A 1, 1, 0, 0, 1, Point.midpoint(grid.ne.o[:n], grid.n2.o[:e])
 
     # N Corners.
-    (2..(COLS-5)).step(2) do |j|
+    (2..(grid.column_count-5)).step(2) do |j|
       a = grid.position 1, j
       d.L a.o[:n]
       d.L Point.midpoint(a.o[:n], grid.ne.o[:w])
@@ -124,41 +124,41 @@ module Knot
     end
 
     # NE Corner.
-    a = grid.position 1, COLS-3
+    a = grid.position 1, grid.column_count-3
     d.L a.o[:n]
     d.L Point.midpoint(a.o[:n], grid.ne.o[:w])
     d.A 1, 1, 0, 0, 1, Point.midpoint(grid.e2.o[:s], grid.se.o[:e])
 
     # E Corners.
-    (2..(ROWS-5)).step(2) do |i|
-      a = grid.position i, COLS-2
+    (2..(grid.row_count-5)).step(2) do |i|
+      a = grid.position i, grid.column_count-2
       d.L a.o[:e]
       d.L Point.midpoint(a.o[:e], grid.se.o[:n])
       d.A r, r, 0, 0, 1, Point.midpoint(grid.se.o[:s], grid.s2.o[:e])
     end
 
     # SE Corner.
-    a = grid.position ROWS-3, COLS-2
+    a = grid.position grid.row_count-3, grid.column_count-2
     d.L a.o[:e]
     d.L Point.midpoint(a.o[:e], grid.se.o[:n])
     d.A 1, 1, 0, 0, 1, Point.midpoint(grid.sw.o[:s], grid.s2.o[:w])
 
     # S Corners.
-    (COLS-3).step(4, -2) do |j|
-      a = grid.position ROWS-2, j
+    (grid.column_count-3).step(4, -2) do |j|
+      a = grid.position grid.row_count-2, j
       d.L a.o[:s]
       d.L Point.midpoint(a.o[:s], grid.sw.o[:e])
       d.A r, r, 0, 0, 1, Point.midpoint(grid.sw.o[:w], grid.w2.o[:s])
     end
 
     # SW Corner.
-    a = grid.position ROWS-2, 2
+    a = grid.position grid.row_count-2, 2
     d.L a.o[:s]
     d.L Point.midpoint(a.o[:s], grid.sw.o[:e])
     d.A 1, 1, 0, 0, 1, Point.midpoint(grid.nw.o[:w], grid.w2.o[:n])
 
     # W Corners.
-    (ROWS-3).step(4, -2) do |i|
+    (grid.row_count-3).step(4, -2) do |i|
       a = grid.position i, 1
       d.L a.o[:w]
       d.L Point.midpoint(a.o[:w], grid.nw.o[:s])
@@ -177,8 +177,8 @@ module Knot
     b_r = Point.distance(mp, grid.w.c)
 
     # Diagonals right.
-    (1..(ROWS-3)).step(2) do |i|
-      (2..(COLS-5)).step(2) do |j|
+    (1..(grid.row_count-3)).step(2) do |i|
+      (2..(grid.column_count-5)).step(2) do |j|
         a = grid.position i, j
 
         d.M a.o[:e_sw]
@@ -189,8 +189,8 @@ module Knot
     end
 
     # Diagonals left.
-    (4..(ROWS-2)).step(2) do |i|
-      (1..(COLS-4)).step(2) do |j|
+    (4..(grid.row_count-2)).step(2) do |i|
+      (1..(grid.column_count-4)).step(2) do |j|
         a = grid.position i, j
 
         d.M a.o[:e_nw]
@@ -201,7 +201,7 @@ module Knot
     end
 
     # Bends N
-    (4..(COLS-3)).step(2) do |j|
+    (4..(grid.column_count-3)).step(2) do |j|
       a = grid.position 1, j
       b = grid.rel 1, -3
 
@@ -217,7 +217,7 @@ module Knot
     end
     
     # Bend NE
-    a = grid.position 2, COLS-4
+    a = grid.position 2, grid.column_count-4
     b = grid.rel -1, 3
 
     d.M a.o[:n_se]
@@ -230,8 +230,8 @@ module Knot
     d.L a.o[:e_nw]
 
     # Bends E
-    (1..(ROWS-6)).step(2) do |i|
-      a = grid.position i, COLS-3
+    (1..(grid.row_count-6)).step(2) do |i|
+      a = grid.position i, grid.column_count-3
 
       b = grid.rel 3, 1
       d.M a.o[:e_sw]
@@ -245,7 +245,7 @@ module Knot
     end
 
     # Bend SE
-    a = grid.position ROWS-2, COLS-3
+    a = grid.position grid.row_count-2, grid.column_count-3
     d.M a.o[:e_sw]
     d.L Point.midpoint(a.i[:e], grid.se.i[:n])
     d.A 1, 1, 0, 0, 0, Point.midpoint(grid.ne.i[:s], grid.e2.i[:w])
@@ -256,8 +256,8 @@ module Knot
     d.L a.o[:s_ne]
 
     # Bends S
-    (2..(COLS-5)).step(2) do |j|
-      a = grid.position ROWS-2, j
+    (2..(grid.column_count-5)).step(2) do |j|
+      a = grid.position grid.row_count-2, j
 
       b = grid.rel -1, 3
       d.M a.o[:e_sw]
@@ -271,7 +271,7 @@ module Knot
     end
 
     # Bend SW
-    a = grid.position ROWS-3, 1
+    a = grid.position grid.row_count-3, 1
     d.M a.o[:s_nw]
     d.L Point.midpoint(a.i[:s], grid.sw.i[:e])
     d.A sm_r, sm_r, 0, 0, 0, Point.midpoint(grid.s2.i[:n], grid.se.i[:w])
@@ -282,7 +282,7 @@ module Knot
     d.L a.o[:w_se]
 
     # Bends W
-    (2..(ROWS-5)).step(2) do |i|
+    (2..(grid.row_count-5)).step(2) do |i|
       a = grid.position i, 1
       b = grid.rel 3, 1
 
