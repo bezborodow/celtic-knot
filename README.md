@@ -15,6 +15,8 @@ Usage: ./knot [options]
     -S, --stroke-width=STROKE_WIDTH  Stroke width.
 ```
 
+## Usage
+
 ### Examples
 
 #### Basic
@@ -67,6 +69,18 @@ $ ./knot \
     --stroke-width=4 \
     > examples/bratach.svg
 ```
+
+## Internals
+
+### `Knot::Grid`
+
+### `Knot::Cell`
+
+### `Knot::Point`
+
+### `Knot::Path`
+
+
 
 ## Author
 
