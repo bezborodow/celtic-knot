@@ -232,6 +232,25 @@ def draw_grid(doc, svg, grid)
   end
 end
 
+def draw_mask(grid)
+  d = Path.new
+  r = nil
+
+  # Fill diamonds.
+  (2..(ROWS-3)).step(2) do |i|
+    (2..(COLS-3)).step(2) do |j|
+      a = grid.position i, j
+
+      d.M grid.n.o[:s]
+      d.L grid.e.o[:w]
+      d.L grid.s.o[:n]
+      d.L grid.w.o[:e]
+    end
+  end
+
+  d.z
+end
+
 def draw_outline(grid)
   d = Path.new
   r = nil # TODO Bring out of blocks.
@@ -465,7 +484,12 @@ Nokogiri::XML::Node.new 'svg', doc do |svg|
       path[:fill] = 'white'
     end
 
-    # TODO put mask here.
+    # Mask
+    Nokogiri::XML::Node.new 'path', doc do |path|
+      mask.add_child path
+      path[:d] = draw_mask grid
+      path[:fill] = 'black'
+    end
   end
 
 
@@ -492,7 +516,7 @@ Nokogiri::XML::Node.new 'svg', doc do |svg|
     end
   end
 
-  #draw_grid doc, svg, grid
+  draw_grid doc, svg, grid
 end
 
 puts doc.to_xml indent:2
