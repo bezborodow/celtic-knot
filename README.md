@@ -1,6 +1,6 @@
 # `celtic-knot` Celtic Knot Cartesian Grid Matrix Pattern Generator for Scaleable Vector Graphics
 
-`celtic-knot` is a [Ruby](https://www.ruby-lang.org/en/) programme that writes an [SVG](https://developer.mozilla.org/en-US/docs/Web/SVG) (Scaleable Vector Graphics) file to standard output based upon the below given parameters.
+**`celtic-knot`** is a [Ruby](https://www.ruby-lang.org/en/) programme that writes celtic knot drawings based upon a given set of parameters. The image is in [SVG](https://developer.mozilla.org/en-US/docs/Web/SVG) (Scaleable Vector Graphics) format, which is sent to standard output.
 
 ## Synopsis
 
@@ -78,17 +78,29 @@ The programme generates SVG output using the [Nokogiri](https://nokogiri.org/) l
 
 The knot is modelled as a two dimensional matrix (`Knot::Grid`), which itself contains cells (`Knot::Cell`), which then contains absolutely positioned precalculated points (`Knot::Point`) that are used for pathing by the drawing engine (`Knot`.)
 
-### `Knot::Grid`
+### `Knot::Grid < Matrix`
 
-https://ruby-doc.org/stdlib-3.0.2/libdoc/matrix/rdoc/Matrix.html
+The grid is a [`Matrix`](https://ruby-doc.org/stdlib-3.0.2/libdoc/matrix/rdoc/Matrix.html) of cells. The grid can be nagivated with absolute coordinates using the `position(x, y)` method and nearby cells accessed relatively using the `rel(x, y)` method.
 
 ### `Knot::Cell`
 
-### `Knot::Point`
+Each cell with the grid contains a number of cartesian points. These points are precaclulated so that minimal calculations are required when pathing.
+
+### `Knot::Point < Vector`
+
+Each point is modelled as a [`Vector[x, y]`](https://ruby-doc.org/stdlib-3.0.2/libdoc/matrix/rdoc/Vector.html).
+
+#### `Knot::Point.midpoint(a, b)`
+
+Calculates the midpoint between two `Points`. Used where a desired point has not been precalculated but can instead be derived from another pair of points that *are* precaculated.
+
+#### `Knot::Point.distance(a, b)`
+
+Calculates the distance between two `Points`. Used for calculating radii for arc curves.
 
 ### `Knot::Path`
 
-
+Models an [SVG path](https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths).
 
 ## Author
 
