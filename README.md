@@ -7,7 +7,7 @@ Usage: ./knot [options]
     -h, --help                       Prints this help
     -V, --vertical=VERTICAL          Number of cells vertically.
     -H, --horizontal=HORIZONTAL      Number of cells horizontally.
-    -G, --grid-size=GRID_SIZE        Dimensions of each cell in the grid.
+    -G, --cell-size=GRID_SIZE        Dimensions of each cell in the grid.
     -b, --background-color=BG_COLOR  Background colour.
     -k, --knot-color=KNOT_COLOR      Knot colour.
     -K, --knot-width=KNOT_WIDTH      Knot width.
@@ -25,7 +25,7 @@ Usage: ./knot [options]
 $ ./knot \
     --vertical=2 \
     --horizontal=2 \
-    --grid-size=96 \
+    --cell-size=96 \
     --background-color='white' \
     --knot-color='white' \
     --knot-width=24 \
@@ -42,7 +42,7 @@ $ ./knot \
 $ ./knot \
     --vertical=3 \
     --horizontal=4 \
-    --grid-size=96 \
+    --cell-size=96 \
     --background-color='#012169' \
     --knot-color='#C8102E' \
     --knot-width=32 \
@@ -59,7 +59,7 @@ $ ./knot \
 $ ./knot \
     --vertical=5 \
     --horizontal=6 \
-    --grid-size=64 \
+    --cell-size=64 \
     --background-color='#169B62' \
     --knot-color='#FF883E' \
     --knot-width=32 \

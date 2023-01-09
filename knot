@@ -50,7 +50,7 @@ end
 options = {
   vertical: 2,
   horizontal: 2,
-  grid_size: 96,
+  cell_size: 96,
   knot_color: 'white',
   knot_width: 24,
   stroke_color: 'black',
@@ -77,8 +77,8 @@ OptionParser.new do |opts|
     options[:horizontal] = opt
   end
 
-  opts.on("-GGRID_SIZE", "--grid-size=GRID_SIZE", "Dimensions of each cell in the grid.") do |opt|
-    options[:grid_size] = opt
+  opts.on("-GCELL_SIZE", "--cell-size=CELL_SIZE", "Dimensions of each cell in the grid.") do |opt|
+    options[:cell_size] = opt
   end
 
   opts.on("-bBG_COLOR", "--background-color=BG_COLOR", "Background colour.") do |opt|
@@ -104,13 +104,13 @@ end.parse!
 
 ROWS = options[:vertical].to_i * 2 + 1
 COLS = options[:horizontal].to_i * 2 + 1
-GRIDSIZE = options[:grid_size].to_i
-W = GRIDSIZE * COLS
-H = GRIDSIZE * ROWS
+CELLSIZE = options[:cell_size].to_i
+W = CELLSIZE * COLS
+H = CELLSIZE * ROWS
 
 grid = Grid.build(ROWS, COLS) do |i, j|
-  c = Point[GRIDSIZE * j + GRIDSIZE / 2,
-            GRIDSIZE * i + GRIDSIZE / 2]
+  c = Point[CELLSIZE * j + CELLSIZE / 2,
+            CELLSIZE * i + CELLSIZE / 2]
 
   Cell.new(c, options[:knot_width].to_i,
            options[:stroke_width].to_i)
