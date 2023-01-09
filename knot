@@ -169,11 +169,11 @@ class Cell
   end
 end
 
-def create_grid
+def create_grid(knot_width, stroke_width)
   Grid.build(ROWS, COLS) do |i, j|
     c = Point[GRIDSIZE * j + GRIDSIZE / 2,
               GRIDSIZE * i + GRIDSIZE / 2]
-    Cell.new(c, INNER_WIDTH, STROKE_WIDTH)
+    Cell.new(c, knot_width, stroke_width)
   end
 end
 
@@ -523,19 +523,6 @@ def draw_knot(grid)
   d.z
 end
 
-BG = '#012169'
-LINE = '#C8102E'
-STROKE = 'white'
-HORIZ = 4
-VERT = 3
-ROWS = VERT * 2 + 1
-COLS = HORIZ * 2 + 1
-GRIDSIZE = 100
-W = GRIDSIZE * COLS
-H = GRIDSIZE * ROWS
-INNER_WIDTH = 32
-STROKE_WIDTH = 16
-
 options = {}
 OptionParser.new do |opts|
   opts.banner = "Usage: ./knot [options]"
@@ -545,13 +532,46 @@ OptionParser.new do |opts|
     exit
   end
 
-  opts.on("-kKNOT_COLOR", "--knot-color=KNOT_COLOR", "Knot colour.") do |k|
-    options[:knot_color] = k
+  opts.on("-VVERTICAL", "--vertical=VERTICAL", "Number of cells vertically.") do |opt|
+    options[:vertical] = opt
   end
 
+  opts.on("-HHORIZONTAL", "--horizontal=HORIZONTAL", "Number of cells horizontally.") do |opt|
+    options[:horizontal] = opt
+  end
+
+  opts.on("-GGRID_SIZE", "--grid-size=GRID_SIZE", "Dimensions of each cell in the grid.") do |opt|
+    options[:grid_size] = opt
+  end
+
+  opts.on("-bBACKGROUND_COLOR", "--background-color=BACKGROUND_COLOR", "Background colour.") do |opt|
+    options[:background_color] = opt
+  end
+
+  opts.on("-kKNOT_COLOR", "--knot-color=KNOT_COLOR", "Knot colour.") do |opt|
+    options[:knot_color] = opt
+  end
+
+  opts.on("-KKNOT_WIDTH", "--knot-width=KNOT_WIDTH", "Knot width.") do |opt|
+    options[:knot_width] = opt
+  end
+
+  opts.on("-sSTROKE_COLOR", "--stroke-color=STROKE_COLOR", "Stroke colour.") do |opt|
+    options[:stroke_color] = opt
+  end
+
+  opts.on("-SSTROKE_WIDTH", "--stroke-width=STROKE_WIDTH", "Stroke width.") do |opt|
+    options[:stroke_width] = opt
+  end
 end.parse!
 
-grid = create_grid
+ROWS = options[:vertical].to_i * 2 + 1
+COLS = options[:horizontal].to_i * 2 + 1
+GRIDSIZE = options[:grid_size].to_i
+W = GRIDSIZE * COLS
+H = GRIDSIZE * ROWS
+
+grid = create_grid options[:knot_width].to_i, options[:stroke_width].to_i
 doc = Nokogiri::XML::Document.new
 
 Nokogiri::XML::Node.new 'svg', doc do |svg|
@@ -565,7 +585,7 @@ Nokogiri::XML::Node.new 'svg', doc do |svg|
   Nokogiri::XML::Node.new 'path', doc do |path|
     svg.add_child path
     path[:d] = "M0,0 v#{H} h#{W} v-#{H} z"
-    path[:fill] = BG
+    path[:fill] = options[:background_color]
   end
 
   # Stroke Mask
@@ -591,7 +611,7 @@ Nokogiri::XML::Node.new 'svg', doc do |svg|
   # Outline stroke
   Nokogiri::XML::Node.new 'g', doc do |g|
     svg.add_child g
-    g[:fill] = STROKE
+    g[:fill] = options[:stroke_color]
     g[:mask] = 'url(#strokeMask)'
 
     Nokogiri::XML::Node.new 'path', doc do |path|
