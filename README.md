@@ -6,6 +6,8 @@
 
 The drawing is in [SVG](https://developer.mozilla.org/en-US/docs/Web/SVG) (Scaleable Vector Graphics) format, which is sent to standard output.
 
+## Usage
+
 ```
 Usage: ./knot [options]
     -h, --help                       Prints this help
@@ -18,8 +20,6 @@ Usage: ./knot [options]
     -s, --stroke-color=STROKE_COLOR  Stroke colour.
     -S, --stroke-width=STROKE_WIDTH  Stroke width.
 ```
-
-## Usage
 
 ### Examples
 
