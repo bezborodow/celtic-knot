@@ -595,7 +595,7 @@ Nokogiri::XML::Node.new 'svg', doc do |svg|
     end
   end
 
-  draw_grid doc, svg, grid
+  #draw_grid doc, svg, grid
 end
 
 puts doc.to_xml indent:2
