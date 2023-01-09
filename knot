@@ -2,11 +2,7 @@
 require 'nokogiri'
 require 'optparse'
 require_relative 'lib/knot'
-
-Point = Knot::Point
-Grid = Knot::Grid
-Path = Knot::Path
-Cell = Knot::Cell
+include Knot
 
 def create_grid(knot_width, stroke_width)
   Grid.build(ROWS, COLS) do |i, j|
