@@ -2,6 +2,19 @@
 
 ## Synopsis
 
+```
+Usage: ./knot [options]
+    -h, --help                       Prints this help
+    -V, --vertical=VERTICAL          Number of cells vertically.
+    -H, --horizontal=HORIZONTAL      Number of cells horizontally.
+    -G, --grid-size=GRID_SIZE        Dimensions of each cell in the grid.
+    -b, --background-color=BG_COLOR  Background colour.
+    -k, --knot-color=KNOT_COLOR      Knot colour.
+    -K, --knot-width=KNOT_WIDTH      Knot width.
+    -s, --stroke-color=STROKE_COLOR  Stroke colour.
+    -S, --stroke-width=STROKE_WIDTH  Stroke width.
+```
+
 ### Examples
 
 #### Basic
