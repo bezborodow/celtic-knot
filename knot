@@ -257,6 +257,14 @@ def draw_mask(grid)
       d.L grid.w.o[:e]
     end
   end
+  
+  # NW Diamond.
+  a = grid.position 1, 1
+  d.M grid.e.o[:w]
+  d.L grid.s.o[:n]
+  d.L Point.midpoint(grid.s.o[:n], grid.w.o[:e])
+  d.A 1, 1, 0, 0, 1, Point.midpoint(grid.n.o[:s], grid.e.o[:w])
+
 
   d.z
 end
@@ -526,7 +534,7 @@ Nokogiri::XML::Node.new 'svg', doc do |svg|
     end
   end
 
-  draw_grid doc, svg, grid
+  #draw_grid doc, svg, grid
 end
 
 puts doc.to_xml indent:2
