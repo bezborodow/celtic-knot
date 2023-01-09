@@ -1,8 +1,10 @@
 # `celtic-knot` Celtic Knot Cartesian Grid Matrix Pattern Generator for Scaleable Vector Graphics
 
-**`celtic-knot`** is a [Ruby](https://www.ruby-lang.org/en/) programme that writes celtic knot drawings based upon a given set of parameters. The image is in [SVG](https://developer.mozilla.org/en-US/docs/Web/SVG) (Scaleable Vector Graphics) format, which is sent to standard output.
+**`celtic-knot`** is a [Ruby](https://www.ruby-lang.org/en/) programme that creates celtic knot drawings based upon a given set of parameters.
 
 ## Synopsis
+
+The drawing is in [SVG](https://developer.mozilla.org/en-US/docs/Web/SVG) (Scaleable Vector Graphics) format, which is sent to standard output.
 
 ```
 Usage: ./knot [options]
@@ -71,6 +73,15 @@ $ ./knot \
     --stroke-width=4 \
     > examples/bratach.svg
 ```
+
+### Converting SVG to Other Formats
+
+The SVG file can be viewed locally in your Web browser or converted into other formats such as (PNG)[http://www.libpng.org/pub/png/] using utilities such as ImageMagick's [`convert`](https://imagemagick.org/script/convert.php). For example:
+
+```
+convert examples/basic.svg examples/basic.png
+```
+
 
 ## Internals
 
