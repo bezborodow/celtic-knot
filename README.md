@@ -89,15 +89,17 @@ The programme generates SVG output using the [Nokogiri](https://nokogiri.org/) l
 
 The knot is modelled as a two dimensional matrix (`Knot::Grid`), which itself contains cells (`Knot::Cell`), which then contains absolutely positioned precalculated points (`Knot::Point`) that are used for pathing by the drawing engine (`Knot`.)
 
-### `Knot::Grid < Matrix`
+### Classes
+
+#### `Knot::Grid < Matrix`
 
 The grid is a [`Matrix`](https://ruby-doc.org/stdlib-3.0.2/libdoc/matrix/rdoc/Matrix.html) of cells. The grid can be nagivated with absolute coordinates using the `position(x, y)` method and nearby cells accessed relatively using the `rel(x, y)` method.
 
-### `Knot::Cell`
+#### `Knot::Cell`
 
 Each cell with the grid contains a number of cartesian points. These points are precaclulated so that minimal calculations are required when pathing.
 
-### `Knot::Point < Vector`
+#### `Knot::Point < Vector`
 
 Each point is modelled as a [`Vector[x, y]`](https://ruby-doc.org/stdlib-3.0.2/libdoc/matrix/rdoc/Vector.html).
 
