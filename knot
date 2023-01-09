@@ -2,19 +2,7 @@
 require 'nokogiri'
 require 'open-uri'
 require 'matrix'
-
-BG = '#012169'
-LINE = '#C8102E'
-STROKE = 'white'
-HORIZ = 4
-VERT = 3
-ROWS = VERT * 2 + 1
-COLS = HORIZ * 2 + 1
-GRIDSIZE = 100
-W = GRIDSIZE * COLS
-H = GRIDSIZE * ROWS
-INNER_WIDTH = 20
-STROKE_WIDTH = 10
+require 'optparse'
 
 class Point < Vector
   def x
@@ -367,7 +355,7 @@ def draw_outline(grid)
   a = grid.position ROWS-3, COLS-2
   d.L a.o[:e]
   d.L Point.midpoint(a.o[:e], grid.se.o[:n])
-  d.A r, r, 0, 0, 1, Point.midpoint(grid.sw.o[:s], grid.s2.o[:w])
+  d.A 1, 1, 0, 0, 1, Point.midpoint(grid.sw.o[:s], grid.s2.o[:w])
 
   # S Corners.
   (COLS-3).step(4, -2) do |j|
@@ -381,7 +369,7 @@ def draw_outline(grid)
   a = grid.position ROWS-2, 2
   d.L a.o[:s]
   d.L Point.midpoint(a.o[:s], grid.sw.o[:e])
-  d.A r, r, 0, 0, 1, Point.midpoint(grid.nw.o[:w], grid.w2.o[:n])
+  d.A 1, 1, 0, 0, 1, Point.midpoint(grid.nw.o[:w], grid.w2.o[:n])
 
   # W Corners.
   (ROWS-3).step(4, -2) do |i|
@@ -535,6 +523,34 @@ def draw_knot(grid)
   d.z
 end
 
+BG = '#012169'
+LINE = '#C8102E'
+STROKE = 'white'
+HORIZ = 4
+VERT = 3
+ROWS = VERT * 2 + 1
+COLS = HORIZ * 2 + 1
+GRIDSIZE = 100
+W = GRIDSIZE * COLS
+H = GRIDSIZE * ROWS
+INNER_WIDTH = 32
+STROKE_WIDTH = 16
+
+options = {}
+OptionParser.new do |opts|
+  opts.banner = "Usage: ./knot [options]"
+
+  opts.on("-h", "--help", "Prints this help") do
+    puts opts
+    exit
+  end
+
+  opts.on("-kKNOT_COLOR", "--knot-color=KNOT_COLOR", "Knot colour.") do |k|
+    options[:knot_color] = k
+  end
+
+end.parse!
+
 grid = create_grid
 doc = Nokogiri::XML::Document.new
 
@@ -587,7 +603,7 @@ Nokogiri::XML::Node.new 'svg', doc do |svg|
   # Knot line
   Nokogiri::XML::Node.new 'g', doc do |g|
     svg.add_child g
-    g[:fill] = LINE
+    g[:fill] = options[:knot_color]
 
     Nokogiri::XML::Node.new 'path', doc do |path|
       g.add_child path
