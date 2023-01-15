@@ -4,13 +4,13 @@ module Knot
   class Grid < Matrix
     attr_reader :position
 
-    def position x, y
-      @position = Vector[x, y]
+    def position i, j
+      @position = Vector[i, j]
       self[*@position]
     end
 
-    def rel x, y
-      self[*@position + Vector[x, y]]
+    def rel i, j
+      self[*@position + Vector[i, j]]
     end
 
     def n

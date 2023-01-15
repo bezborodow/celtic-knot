@@ -98,7 +98,7 @@ The drawing engine.
 
 #### `Knot::Grid`
 
-The grid is a [`Matrix`](https://ruby-doc.org/stdlib-3.0.2/libdoc/matrix/rdoc/Matrix.html) of cells. The grid can be nagivated with absolute coordinates using the `position(x, y)` method and nearby cells accessed relatively using the `rel(x, y)` method.
+The grid is a [`Matrix`](https://ruby-doc.org/stdlib-3.0.2/libdoc/matrix/rdoc/Matrix.html) of cells. The grid can be nagivated with absolute coordinates using the `position(i, j)` method and nearby cells accessed relatively using the `rel(i, j)` method.
 
 #### `Knot::Cell`
 
@@ -106,7 +106,7 @@ Each cell within the grid contains several cartesian points stored in hashes. Th
 
 #### `Knot::Point`
 
-Each point is modelled as a [`Vector[x, y]`](https://ruby-doc.org/stdlib-3.0.2/libdoc/matrix/rdoc/Vector.html).
+Each point is modelled in the cartesian plane as a [`Vector[x, y]`](https://ruby-doc.org/stdlib-3.0.2/libdoc/matrix/rdoc/Vector.html).
 
 #### `Knot::Path`
 
