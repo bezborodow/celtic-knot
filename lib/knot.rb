@@ -3,9 +3,13 @@ require_relative "knot/cell"
 require_relative "knot/point"
 require_relative "knot/path"
 
+# Knot drawing engine.
 module Knot
   class Error < StandardError; end
 
+  # Draw the inner mask layer of the outline stroke.
+  #
+  # @return [String] SVG path.
   def self.draw_mask(grid)
     d = Path.new
     grid.position 1, 1
@@ -96,6 +100,9 @@ module Knot
     d.z
   end
 
+  # Draw the outline stroke.
+  #
+  # @return [String] SVG path.
   def self.draw_outline(grid)
     d = Path.new
     a = grid.position 1, 1
@@ -160,6 +167,9 @@ module Knot
     d.z
   end
 
+  # Draw the knot.
+  #
+  # @return [String] SVG path.
   def self.draw_knot(grid)
     d = Path.new
     a = grid.position 2, 2
