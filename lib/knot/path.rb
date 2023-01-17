@@ -1,9 +1,7 @@
-# Knot::Path
-#
-# Models an SVG path.
-#
-# @link https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths
 module Knot
+  # Models an SVG path.
+  #
+  # https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths
   class Path
     def initialize
       @path = []

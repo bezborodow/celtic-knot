@@ -1,6 +1,10 @@
 require 'matrix'
 
 module Knot
+  # The grid is a [`Matrix`](https://ruby-doc.org/stdlib-3.0.2/libdoc/matrix/rdoc/Matrix.html)
+  # of cells (arranged as rows and columns.) The grid can be nagivated with absolute
+  # coordinates using the `position(i, j)` method and nearby cells accessed relatively
+  # using the `rel(i, j)` method.
   class Grid < Matrix
     attr_reader :position
 
