@@ -129,6 +129,3 @@ Calculates the distance between two points. Used for calculating radii for arc c
 ## Author
 
 2023 Damien Bezborodov
-
-This software is in the public domain "AS-IS," without warranty and without liability.
-
