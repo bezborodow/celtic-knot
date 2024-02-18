@@ -85,8 +85,6 @@ convert -background none examples/basic.svg examples/basic.png
 
 ## Internals
 
-TODO: Move to API reference docs.
-
 [API Documentation](https://www.rubydoc.info/github/bezborodow/celtic-knot/main)
 
 The programme generates SVG output using the [Nokogiri](https://nokogiri.org/) library for [XML](https://www.w3.org/standards/xml/core).
