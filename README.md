@@ -1,4 +1,4 @@
-# Celtic Knot Cartesian Grid Matrix Pattern Generator for SVG
+# Celtic Knot Generator for SVG
 
 **`celtic-knot`** is a [Ruby](https://www.ruby-lang.org/en/) programme that creates simple rectangular
 celtic knot drawings based upon a given set of parameters. The images are in a vector format.
@@ -91,7 +91,8 @@ TODO: Move to API reference docs.
 
 The programme generates SVG output using the [Nokogiri](https://nokogiri.org/) library for [XML](https://www.w3.org/standards/xml/core).
 
-The knot is modelled as a two dimensional matrix (`Knot::Grid`), which itself contains cells (`Knot::Cell`), which then contains absolutely positioned precalculated points (`Knot::Point`) that are used for pathing by the drawing engine (`Knot`.)
+The knot is modelled as a two dimensional matrix (`Knot::Grid`), which itself contains cells (`Knot::Cell`), which then contains absolutely
+positioned precalculated cartesian points (`Knot::Point`) that are used for pathing by the drawing engine (`Knot`.)
 
 ### Modules
 
