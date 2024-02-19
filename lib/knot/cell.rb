@@ -1,8 +1,9 @@
 require_relative "point"
 
 module Knot
-  # Each cell within the grid contains several cartesian points stored in hashes.
-  # These points are precaclulated so that minimal calculations are required when pathing.
+  # Each cell within the grid contains several Cartesian points stored in
+  # hashes.  These points are pre-calculated so that minimal calculations are
+  # required when pathing.
   class Cell
     attr_reader :c, :i, :o
 

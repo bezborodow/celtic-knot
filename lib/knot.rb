@@ -4,6 +4,15 @@ require_relative "knot/point"
 require_relative "knot/path"
 
 # Knot drawing engine.
+#
+# Generates SVG output using the Nokogiri library for XML.
+#
+# The knot is modelled as a two dimensional matrix, which itself contains
+# cells, which then contains absolutely positioned precalculated cartesian
+# points that are used for pathing by the drawing engine.
+#
+# https://nokogiri.org/
+# https://www.w3.org/standards/xml/core
 module Knot
   class Error < StandardError; end
 

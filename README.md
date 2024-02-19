@@ -82,49 +82,9 @@ The SVG file can be viewed locally in your Web browser or converted into other f
 convert -background none examples/basic.svg examples/basic.png
 ```
 
-
 ## Internals
 
 [API Documentation](https://www.rubydoc.info/github/bezborodow/celtic-knot/)
-
-The programme generates SVG output using the [Nokogiri](https://nokogiri.org/) library for [XML](https://www.w3.org/standards/xml/core).
-
-The knot is modelled as a two dimensional matrix (`Knot::Grid`), which itself contains cells (`Knot::Cell`), which then contains absolutely
-positioned precalculated cartesian points (`Knot::Point`) that are used for pathing by the drawing engine (`Knot`.)
-
-### Modules
-
-#### `Knot`
-
-The drawing engine.
-
-### Classes
-
-#### `Knot::Grid`
-
-The grid is a [`Matrix`](https://ruby-doc.org/stdlib-3.0.2/libdoc/matrix/rdoc/Matrix.html) of cells (arranged as rows and columns.) The grid can be nagivated with absolute coordinates using the `position(i, j)` method and nearby cells accessed relatively using the `rel(i, j)` method.
-
-#### `Knot::Cell`
-
-Each cell within the grid contains several cartesian points stored in hashes. These points are precaclulated so that minimal calculations are required when pathing.
-
-#### `Knot::Point`
-
-Each point is modelled in the cartesian plane as a [`Vector[x, y]`](https://ruby-doc.org/stdlib-3.0.2/libdoc/matrix/rdoc/Vector.html).
-
-#### `Knot::Path`
-
-Models an [SVG path](https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths).
-
-### Class Methods
-
-#### `Knot::Point.midpoint(a, b)`
-
-Calculates the midpoint between two points. Used where a desired point has not been precalculated but can instead be derived from another pair of points that *are* precalculated.
-
-#### `Knot::Point.distance(a, b)`
-
-Calculates the distance between two points. Used for calculating radii for arc curves.
 
 ## Author
 
