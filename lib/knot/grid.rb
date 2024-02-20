@@ -3,7 +3,7 @@ require 'matrix'
 module Knot
   # The grid is a Matrix of cells (arranged as rows and columns.)
   #
-  # https://ruby-doc.org/stdlib-3.0.2/libdoc/matrix/rdoc/Matrix.html)
+  # https://ruby-doc.org/stdlib-3.0.2/libdoc/matrix/rdoc/Matrix.html
   class Grid < Matrix
     attr_reader :position
 
