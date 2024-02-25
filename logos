@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+# Bezborodov Forms
+# Colours: #f0db4f #323330
+./knot \
+    --vertical=2 \
+    --horizontal=2 \
+    --cell-size=96 \
+    --knot-color='#323330' \
+    --knot-width=32 \
+    --stroke-color='#f0db4f' \
+    --stroke-width=24 \
+    > b-forms.svg
