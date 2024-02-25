@@ -1,0 +1,17 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    matrix (0.4.2)
+    nokogiri (1.14.5)
+      racc (~> 1.4)
+    racc (1.6.2)
+
+PLATFORMS
+  x86_64-linux
+
+DEPENDENCIES
+  matrix
+  nokogiri
+
+BUNDLED WITH
+   2.4.10

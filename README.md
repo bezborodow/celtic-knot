@@ -87,11 +87,12 @@ convert -background none examples/basic.svg examples/basic.png
 ### Fedora
 
 ```console
-sudo dnf install ruby
+sudo dnf install ruby rubygem-nokogiri
 mkdir ~/src
 cd ~/src/
 git clone git@github.com:bezborodow/celtic-knot.git
 cd celtic-knot
+bundle install --local
 ```
 
 
