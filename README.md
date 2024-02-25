@@ -82,6 +82,19 @@ The SVG file can be viewed locally in your Web browser or converted into other f
 convert -background none examples/basic.svg examples/basic.png
 ```
 
+## Installation
+
+### Fedora
+
+```console
+sudo dnf install ruby
+mkdir ~/src
+cd ~/src/
+git clone git@github.com:bezborodow/celtic-knot.git
+cd celtic-knot
+```
+
+
 ## Internals
 
 [API Documentation](https://www.rubydoc.info/github/bezborodow/celtic-knot/)
