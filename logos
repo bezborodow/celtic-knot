@@ -11,3 +11,17 @@
     --stroke-color='#f0db4f' \
     --stroke-width=24 \
     > b-forms.svg
+convert -background none b-forms.svg b-forms.png
+
+# Emden Norfolk Workflow
+# Colours: #d76d1f #24414f
+./knot \
+    --vertical=2 \
+    --horizontal=3 \
+    --cell-size=96 \
+    --knot-color='#24414f' \
+    --knot-width=32 \
+    --stroke-color='#d76d1f' \
+    --stroke-width=32 \
+    > workflow.svg
+convert -background none workflow.svg workflow.png
